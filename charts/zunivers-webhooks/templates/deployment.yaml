@@ -32,7 +32,14 @@ spec:
             - name: zuwh-config-vol
               mountPath: /go/config.json
               subPath: config.json
+            - name: timezone
+              mountPath: /etc/localtime
+              subPath: Europe/Paris
+              readOnly: true
       volumes:
         - name: zuwh-config-vol
           configMap:
             name: zuwh-config
+        - name: timezone
+          hostPath:
+            path: /usr/share/zoneinfo
