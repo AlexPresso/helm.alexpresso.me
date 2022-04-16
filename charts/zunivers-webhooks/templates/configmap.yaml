@@ -6,7 +6,7 @@ data:
   config.json: |
     {
       "frontBaseUrl": "https://zunivers.zerator.com",
-      "cdnBaseUrl": "https://minio-zunivers-prod.prod.poneyy.fr/zunivers-prod",
+      "cdnBaseUrl": "https://minio.prod.poneyy.fr/zunivers-prod",
       "api": {
         "baseurl": "https://zunivers-api.zerator.com",
         "timeout": 10
@@ -16,7 +16,7 @@ data:
         "config_changed": "Un paramètre de configuration a changé !",
         "new_patchnote": "Une nouvelle patchnote a été publiée !",
         "status_changed": "Le statut de l'application a changé.",
-        "new_day": "C'est l'heure du `!daily` ! (<#808432657838768168>)",
+        "new_day": "C'est l'heure du `!journa` ! (<#808432657838768168>)",
         "item_changed": "Un item a été modifié !",
         "new_item": "Un nouvel item a été ajouté !",
         "item_removed": "Un item a été supprimé",
