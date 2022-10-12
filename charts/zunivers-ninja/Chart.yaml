@@ -1,0 +1,6 @@
+apiVersion: v2
+name: zunivers-ninja
+description: Automated advice tool for the ZUnivers card game (not affiliated)
+type: application
+version: 1.0.0
+appVersion: "latest"
