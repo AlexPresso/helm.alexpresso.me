@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zunivers-ninja
+spec:
+  selector:
+    matchLabels:
+      name: zunivers-ninja
+  template:
+    metadata:
+      labels:
+        name: zunivers-ninja
+    spec:
+      containers:
+        - name: zuninja-app
+          image: openjdk
+          imagePullPolicy: Always
+          command:
+            - sh
+            - -exc
+            - |
+              curl 'https://maven.pkg.github.com/AlexPresso/zunivers-ninja/me.alexpresso.zunivers-ninja/{{ .Values.version }}/zunivers-ninja-{{ .Values.version }}.jar' \
+                -H "Authorization: Bearer {{ .Values.github.pat }}" \
+                -L \
+                -O \
+              && java -jar zunivers-ninja-{{ .Values.version }}.jar
+          resources:
+            requests:
+              cpu: 100m
+              memory: 500M
+          volumeMounts:
+            - name: zuninja-config-vol
+              mountPath: /config/application.yml
+              subPath: application.yml
+            - name: timezone
+              mountPath: /etc/localtime
+              subPath: Europe/Paris
+              readOnly: true
+      volumes:
+        - name: zuninja-config-vol
+          configMap:
+            name: zuninja-config
+        - name: timezone
+          hostPath:
+            path: /usr/share/zoneinfo

@@ -1,0 +1,25 @@
+apiVersion: v2
+kind: ConfigMap
+metadata:
+  name: zuninja-config
+data:
+  application.yml: |-
+    spring.neo4j:
+      uri: {{ .Values.database.uri }}
+      authentication:
+        username: {{ .Values.database.username }}
+        password: {{ .Values.database.password }}
+
+    toolkit:
+      discordTags: {{ .Values.toolkit.discordTags }}
+      runAutomatedTasks: {{ .Values.toolkit.runAutomatedTasks }}
+
+    zunivers:
+      apiBaseUrl: {{ .Values.zunivers.apiBaseUrl }}
+      frontBaseUrl: {{ .Values.zunivers.frontBaseUrl }}
+
+    webhookUrl: {{ .Values.webhookUrl }}
+
+    logging:
+      level:
+        me.alexpresso.zuninja: INFO

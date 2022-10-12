@@ -1,0 +1,19 @@
+version: 1.6.2
+
+database:
+  uri: bolt://localhost:7687
+  username: neo4j
+  password: changeme
+
+toolkit:
+  discordTags: Alex'Presso#5480 #Comma separated
+  runAutomatedTasks: true
+
+zunivers:
+  apiBaseUrl: zunivers-api.zerator.com
+  frontBaseUrl: zunivers.zerator.com
+
+webhookUrl: #insert your own (facultative)
+
+github:
+  pat: #add your own github PAT (used to download the jar artifact)
