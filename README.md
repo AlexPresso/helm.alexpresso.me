@@ -7,5 +7,6 @@ My own helm charts repository
 
 ## Helm charts
 | Project                                                              | Description                                                             |
-| -------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+|----------------------------------------------------------------------|-------------------------------------------------------------------------|
 | [zunivers-webhooks](https://github.com/AlexPresso/ZUnivers-Webhooks) | Discord webhooks dispatcher for the ZUnivers card game (not affiliated) |
+| [zunivers-ninja](https://github.com/AlexPresso/zunivers-ninja)       | Automated advice tool for the ZUnivers card game (not affiliated)       |

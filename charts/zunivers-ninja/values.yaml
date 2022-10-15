@@ -1,5 +1,15 @@
 version: 1.6.2
 
+requests:
+  cpu: 100m
+  memory: 500Mi
+limits:
+  cpu: 200m
+  memory: 1000Mi
+
+ingress:
+  className: traefik
+
 database:
   uri: bolt://localhost:7687
   username: neo4j
@@ -7,7 +17,7 @@ database:
 
 toolkit:
   discordTags: Alex'Presso#5480 #Comma separated
-  runAutomatedTasks: true
+  runAutomatedTasks: false
 
 zunivers:
   apiBaseUrl: zunivers-api.zerator.com
@@ -16,4 +26,4 @@ zunivers:
 webhookUrl: #insert your own (facultative)
 
 github:
-  pat: #add your own github PAT (used to download the jar artifact)
+  pat: #Use your own
