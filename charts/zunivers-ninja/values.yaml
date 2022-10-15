@@ -11,11 +11,13 @@ ingress:
   enabled: false
   className: traefik
 
-neo4j:
-  core:
-    numberOfServers: 1
-  name: zuninja-db
-  neo4jPassword: changeme
+database:
+  neo4j:
+    name: zuninja-db
+    password: changeme
+  volumes:
+    data:
+      mode: "defaultStorageClass"
 
 toolkit:
   discordTags: Alex'Presso#5480 #Comma separated
