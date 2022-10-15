@@ -8,6 +8,7 @@ limits:
   memory: 1000Mi
 
 ingress:
+  enabled: false
   className: traefik
 
 database:

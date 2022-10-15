@@ -7,8 +7,8 @@ data:
     spring.neo4j:
       uri: {{ .Values.database.uri }}
       authentication:
-        username: {{ .Values.database.username }}
-        password: {{ .Values.database.password }}
+        username: $NEO4J_USERNAME
+        password: $NEO4J_PASSWORD
 
     toolkit:
       discordTags: {{ .Values.toolkit.discordTags }}
@@ -18,7 +18,7 @@ data:
       apiBaseUrl: {{ .Values.zunivers.apiBaseUrl }}
       frontBaseUrl: {{ .Values.zunivers.frontBaseUrl }}
 
-    webhookUrl: {{ .Values.webhookUrl }}
+    webhookUrl: $WEBHOOK_URL
 
     logging:
       level:
