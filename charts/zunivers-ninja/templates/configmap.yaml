@@ -5,9 +5,9 @@ metadata:
 data:
   application.yml: |-
     spring.neo4j:
-      uri: {{ .Values.database.uri }}
+      uri: "bolt://$DB_HOST:7734"
       authentication:
-        username: $NEO4J_USERNAME
+        username: neo4j
         password: $NEO4J_PASSWORD
 
     toolkit:

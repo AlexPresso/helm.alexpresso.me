@@ -11,10 +11,11 @@ ingress:
   enabled: false
   className: traefik
 
-database:
-  uri: bolt://localhost:7687
-  username: neo4j
-  password: changeme
+neo4j:
+  core:
+    numberOfServers: 1
+  name: zuninja-db
+  neo4jPassword: changeme
 
 toolkit:
   discordTags: Alex'Presso#5480 #Comma separated
