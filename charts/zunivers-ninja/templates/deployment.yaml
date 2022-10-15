@@ -42,15 +42,12 @@ spec:
           ports:
             - containerPort: 8080
           env:
+            - name: DB_HOST
+              value: zuninja-db
             - name: GITHUB_PAT
               valueFrom:
                 secretKeyRef:
                   key: pat
-                  name: zuninja-secrets
-            - name: NEO4J_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  key: username
                   name: zuninja-secrets
             - name: NEO4J_PASSWORD
               valueFrom:
