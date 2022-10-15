@@ -1,3 +1,5 @@
+{{if .Values.ingress.enabled }}
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -12,6 +14,8 @@ spec:
           - path: /
             pathType: Prefix
             backend:
-              resource:
-                name: zunivers-ninja
-                kind: Pod
+              service:
+                name: zunivers-ninja-service
+                port:
+                  number: 8080
+{{end}}

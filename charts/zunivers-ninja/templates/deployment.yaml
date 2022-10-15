@@ -39,11 +39,28 @@ spec:
               mountPath: /etc/localtime
               subPath: Europe/Paris
               readOnly: true
+          ports:
+            - containerPort: 8080
           env:
             - name: GITHUB_PAT
               valueFrom:
                 secretKeyRef:
                   key: pat
+                  name: zuninja-secrets
+            - name: NEO4J_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: zuninja-secrets
+            - name: NEO4J_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: zuninja-secrets
+            - name: WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  key: webhookUrl
                   name: zuninja-secrets
       volumes:
         - name: zuninja-config-vol

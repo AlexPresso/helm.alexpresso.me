@@ -1,0 +1,14 @@
+{{if .Values.ingress.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: zunivers-ninja-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      name: http
+  selector:
+    app: zuninja-app
+  type: ClusterIP
+{{end}}
