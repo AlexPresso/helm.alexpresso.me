@@ -5,10 +5,10 @@ metadata:
 data:
   application.yml: |-
     spring.neo4j:
-      uri: "bolt://$DB_HOST:7734"
+      uri: "bolt://${DB_HOST}:7687"
       authentication:
         username: neo4j
-        password: $NEO4J_PASSWORD
+        password: ${NEO4J_PASSWORD}
 
     toolkit:
       discordTags: {{ .Values.toolkit.discordTags }}
@@ -18,7 +18,7 @@ data:
       apiBaseUrl: {{ .Values.zunivers.apiBaseUrl }}
       frontBaseUrl: {{ .Values.zunivers.frontBaseUrl }}
 
-    webhookUrl: $WEBHOOK_URL
+    webhookUrl: ${WEBHOOK_URL}
 
     logging:
       level:
