@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zunivers-ninja
+spec:
+  selector:
+    matchLabels:
+      name: zunivers-ninja
+  template:
+    metadata:
+      labels:
+        name: zunivers-ninja
+    spec:
+      containers:
+        - name: zuninja-app
+          image: openjdk
+          imagePullPolicy: Always
+          command:
+            - sh
+            - -exc
+            - |
+              curl 'https://maven.pkg.github.com/AlexPresso/zunivers-ninja/me/alexpresso/zunivers-ninja/{{ .Values.version }}/zunivers-ninja-{{ .Values.version }}-exec.jar' \
+                -H "Authorization: token $GITHUB_PAT" \
+                -L \
+                -O \
+              && java -jar zunivers-ninja-{{ .Values.version }}-exec.jar
+          resources:
+            requests:
+              cpu: {{ default "100m" .Values.requests.cpu }}
+              memory: {{ default "500Mi" .Values.requests.memory }}
+            limits:
+              cpu: {{ default "200m" .Values.limits.cpu }}
+              memory: {{ default "1000Mi" .Values.limits.memory }}
+          volumeMounts:
+            - name: zuninja-config-vol
+              mountPath: /config/application.yml
+              subPath: application.yml
+            - name: timezone
+              mountPath: /etc/localtime
+              subPath: Europe/Paris
+              readOnly: true
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: {{ $.Release.Name }}
+            - name: GITHUB_PAT
+              valueFrom:
+                secretKeyRef:
+                  key: pat
+                  name: zuninja-secrets
+            - name: NEO4J_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: zuninja-secrets
+            - name: WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  key: webhookUrl
+                  name: zuninja-secrets
+      volumes:
+        - name: zuninja-config-vol
+          configMap:
+            name: zuninja-config
+        - name: timezone
+          hostPath:
+            path: /usr/share/zoneinfo
