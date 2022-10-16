@@ -1,8 +1,8 @@
-{{if .Values.ingress.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: zunivers-ninja-service
+  name: zuninja-svc
+  namespace: {{ .Release.Namespace }}
 spec:
   ports:
     - port: 80
@@ -11,4 +11,3 @@ spec:
   selector:
     app: zuninja-app
   type: ClusterIP
-{{end}}
