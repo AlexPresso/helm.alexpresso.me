@@ -3,6 +3,21 @@ entries:
   zunivers-ninja:
   - apiVersion: v2
     appVersion: latest
+    created: "2022-10-16T12:27:05.653571678Z"
+    dependencies:
+    - alias: database
+      name: neo4j-standalone
+      repository: https://neo4j.github.io/helm-charts/
+      version: 4.4.10
+    description: Automated advice tool for the ZUnivers card game (not affiliated)
+    digest: 596410921e7d2c12049dcb4326f2d847baa8c4f389c487b1a9df6ed072ac0971
+    name: zunivers-ninja
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-ninja-1.0.1/zunivers-ninja-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: latest
     created: "2022-10-16T12:11:54.204342263Z"
     dependencies:
     - alias: database
@@ -50,4 +65,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2022-10-16T12:11:54.204457364Z"
+generated: "2022-10-16T12:27:05.653584578Z"
