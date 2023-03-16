@@ -2,10 +2,10 @@ apiVersion: v2
 name: zunivers-ninja
 description: Automated advice tool for the ZUnivers card game (not affiliated)
 type: application
-version: 1.0.3
+version: 1.0.4
 appVersion: "latest"
 dependencies:
-  - name: neo4j-standalone
+  - name: neo4j
     alias: database
-    version: 4.4.10
+    version: 5.5.0
     repository: https://neo4j.github.io/helm-charts/
