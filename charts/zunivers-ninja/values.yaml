@@ -17,7 +17,9 @@ database:
     password: changeme
   volumes:
     data:
-      mode: "defaultStorageClass"
+      mode: "dynamic"
+      dynamic:
+        storageClassName: premium-rwo
 
 toolkit:
   discordTags: Alex'Presso#5480 #Comma separated
