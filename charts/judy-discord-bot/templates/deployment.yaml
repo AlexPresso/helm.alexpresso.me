@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: application
+          image: ghcr.io/alexpresso/judy-discord-bot:0.16.0
+          imagePullPolicy: IfNotPresent
+          resources:
+{{- toYaml .Values.resources | nindent 12 }}
+
+          volumeMounts:
+            - name: {{ .Release.Name }}-config-vol
+              mountPath: /opt/app/config.json
+              subPath: config.json
+            - name: timezone
+              mountPath: /etc/localtime
+              subPath: Europe/Paris
+              readOnly: true
+      volumes:
+        - name: {{ .Release.Name }}-config-vol
+          configMap:
+            name: {{ .Release.Name }}-config
+        - name: timezone
+          hostPath:
+            path: /usr/share/zoneinfo

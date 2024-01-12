@@ -1,0 +1,32 @@
+resources:
+  requests:
+    cpu: 100m
+    memory: 500Mi
+  limits:
+    cpu: 200m
+    memory: 1000Mi
+
+config:
+  bot:
+    owner: #Your Discord ID
+    guild: #Your Guild ID
+    client: #Bot Client ID
+    token: #Bot token
+  create_voice_channels:
+    #12345789: "987654321" ('voice channel id': 'parent category id')
+  mod_channel: #Bot/Moderation logs channel
+
+  birthdays:
+    channel: #Channel where to send birthdays notifications
+    embed:
+      title: "Happy birthday !"
+      message: "Everyone wishes a happy birthday to <@%userId%> !"
+  twitch:
+    message: "%userName% is live!"
+    channel: #Your twitch channel name
+    discord_channel: #Discord channel where to send notifications
+    client_id: #Your twitch app client ID
+    client_secret: #Your twitch app client secret
+  commands:
+    - birthdays
+    - infos
