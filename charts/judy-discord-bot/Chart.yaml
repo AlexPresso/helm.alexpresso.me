@@ -1,0 +1,6 @@
+apiVersion: v2
+name: judy-discord-both
+description: A small custom Discord bot with a highly generic code-base made with Discord.js which supports slash-commands, cron-jobs and much more.
+type: application
+version: 1.0.0
+appVersion: 0.16.0

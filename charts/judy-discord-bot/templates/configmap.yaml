@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  config.json: |
+    {
+      "bot": {
+        "ownerId": "{{ required "ownerId value is required" .Values.config.bot.owner }}",
+        "guildId": "{{ required "guildId value is required" .Values.config.bot.guild }}",
+        "clientId": "{{ required "bot clientId value is required" .Values.config.bot.client }}",
+        "token": "{{ required  "token value is required" .Values.config.bot.token }}"
+      },
+      "modChannel": "{{ .Values.config.mod_channel }}",
+      "createVoiceChannels": {{ toJson .Values.config.create_voice_channels }},
+      "birthdays": {
+        "channelId": "{{ .Values.config.birthdays.channel }}",
+        "dates": {},
+        "embed": {
+          "title": "{{ .Values.config.birthdays.embed.title }}",
+          "message": "{{ .Values.config.birthdays.embed.message }}"
+        }
+      },
+      "twitch": {
+        "message": "{{ .Values.config.twitch.message }}",
+        "channel": "{{ .Values.config.twitch.channel }}",
+        "discordChannel": "{{ .Values.config.twitch.discord_channel }}",
+        "clientId": "{{ .Values.config.twitch.client_id }}",
+        "clientSecret": "{{ .Values.config.twitch.client_secret }}"
+      },
+      "commands": {{ toJson .Values.config.commands }}
+    }
