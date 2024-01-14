@@ -3,8 +3,8 @@ resources:
     cpu: 100m
     memory: 500Mi
   limits:
-    cpu: 200m
-    memory: 1000Mi
+    cpu: 500m
+    memory: 1500Mi
 
 ingress:
   enabled: false
