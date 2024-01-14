@@ -1,11 +1,10 @@
-version: 1.6.2
-
-requests:
-  cpu: 100m
-  memory: 500Mi
-limits:
-  cpu: 200m
-  memory: 1000Mi
+resources:
+  requests:
+    cpu: 500m
+    memory: 500Mi
+  limits:
+    cpu: 2000m
+    memory: 1500Mi
 
 ingress:
   enabled: false
@@ -19,15 +18,12 @@ database:
     data:
       mode: "defaultStorageClass"
 
-toolkit:
+config:
   discordTags: Alex'Presso#5480 #Comma separated
   runAutomatedTasks: false
 
-zunivers:
-  apiBaseUrl: zunivers-api.zerator.com
-  frontBaseUrl: zunivers.zerator.com
+  zunivers:
+    apiBaseUrl: zunivers-api.zerator.com
+    frontBaseUrl: zunivers.zerator.com
 
-webhookUrl: #insert your own (facultative)
-
-github:
-  pat: #Use your own
+  webhookUrl: #insert your own (facultative)
