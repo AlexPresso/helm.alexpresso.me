@@ -13,8 +13,24 @@ spec:
     spec:
       containers:
         - name: {{ .Release.Name }}-app
-          image: ghcr.io/alexpresso/zunivers-ninja:1.10.0
+          image: ghcr.io/alexpresso/zunivers-ninja:1.12.0
           imagePullPolicy: IfNotPresent
+
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 2
+
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
 
