@@ -13,18 +13,16 @@ spec:
     spec:
       containers:
         - name: application
-          image: golang
+          image: ghcr.io/alexpresso/zunivers-webhooks:1.8.0
           imagePullPolicy: IfNotPresent
           env:
             - name: "GOPROXY"
               value: direct
           resources:
-            requests:
-              cpu: 100m
-              memory: 500M
+{{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: {{ .Release.Name }}-config-vol
-              mountPath: /go/config.json
+              mountPath: /app/config.json
               subPath: config.json
             - name: timezone
               mountPath: /etc/localtime
