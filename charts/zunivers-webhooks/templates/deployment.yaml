@@ -1,26 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zunivers-webhooks
+  name: {{ .Release.Name }}
 spec:
   selector:
     matchLabels:
-      name: zunivers-webhooks
+      name: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        name: zunivers-webhooks
+        name: {{ .Release.Name }}
     spec:
       containers:
         - name: application
           image: golang
-          imagePullPolicy: Always
-          command:
-            - sh
-            - -exc
-            - |
-              go install github.com/alexpresso/zunivers-webhooks@{{ .Values.version }} && \
-              zunivers-webhooks
+          imagePullPolicy: IfNotPresent
           env:
             - name: "GOPROXY"
               value: direct
@@ -29,7 +23,7 @@ spec:
               cpu: 100m
               memory: 500M
           volumeMounts:
-            - name: zuwh-config-vol
+            - name: {{ .Release.Name }}-config-vol
               mountPath: /go/config.json
               subPath: config.json
             - name: timezone
@@ -37,9 +31,9 @@ spec:
               subPath: Europe/Paris
               readOnly: true
       volumes:
-        - name: zuwh-config-vol
+        - name: {{ .Release.Name }}-config-vol
           configMap:
-            name: zuwh-config
+            name: {{ .Release.Name }}-config
         - name: timezone
           hostPath:
             path: /usr/share/zoneinfo
