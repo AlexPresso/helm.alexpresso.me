@@ -24,7 +24,9 @@ data:
       "twitch": {
         "message": "{{ .Values.config.twitch.message }}",
         "channel": "{{ .Values.config.twitch.channel }}",
-        "discordChannel": "{{ .Values.config.twitch.discord_channel }}",
+        "userId": "{{ .Values.config.twitch.user_id }}",
+        "liveDiscordChannel": "{{ .Values.config.twitch.live_discord_channel }}",
+        "replayDiscordChannel": "{{ .Values.config.twitch.replay_discord_channel }}",
         "clientId": "{{ .Values.config.twitch.client_id }}",
         "clientSecret": "{{ .Values.config.twitch.client_secret }}"
       },
