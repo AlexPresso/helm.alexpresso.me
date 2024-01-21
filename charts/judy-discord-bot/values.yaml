@@ -22,11 +22,13 @@ config:
       title: "Happy birthday !"
       message: "Everyone wishes a happy birthday to <@%userId%> !"
   twitch:
+    enable: false
     message: "%userName% is live!"
     channel: #Your twitch channel name
     user_id: #Your twitch user id
     live_discord_channel: #Discord channel where to send Live notifications
     replay_discord_channel: #Discord channel where to send replays
+    clip_discord_channel: #Discord channel where to send clips
     client_id: #Your twitch app client ID
     client_secret: #Your twitch app client secret
   commands:
