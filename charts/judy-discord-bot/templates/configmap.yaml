@@ -22,11 +22,13 @@ data:
         }
       },
       "twitch": {
+        "enable": {{ .Values.config.twitch.enable }},
         "message": "{{ .Values.config.twitch.message }}",
         "channel": "{{ .Values.config.twitch.channel }}",
         "userId": "{{ .Values.config.twitch.user_id }}",
         "liveDiscordChannel": "{{ .Values.config.twitch.live_discord_channel }}",
         "replayDiscordChannel": "{{ .Values.config.twitch.replay_discord_channel }}",
+        "clipDiscordChannel": "{{ .Values.config.twitch.clip_discord_channel }}",
         "clientId": "{{ .Values.config.twitch.client_id }}",
         "clientSecret": "{{ .Values.config.twitch.client_secret }}"
       },
