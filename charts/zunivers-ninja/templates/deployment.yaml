@@ -57,6 +57,8 @@ spec:
                 secretKeyRef:
                   key: webhookUrl
                   name: {{ .Release.Name }}-secrets
+            - name: JAVA_OPTS
+              value: {{ .Values.java.opts }}
       volumes:
         - name: {{ .Release.Name }}-config-vol
           configMap:

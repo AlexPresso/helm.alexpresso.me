@@ -6,6 +6,9 @@ resources:
     cpu: 2000m
     memory: 1500Mi
 
+java:
+  opts: "-Xmx1400m"
+
 ingress:
   enabled: false
   className: traefik
