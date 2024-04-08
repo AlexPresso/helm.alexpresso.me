@@ -1,0 +1,20 @@
+{{ if .Values.service.http.enable }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-http
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: {{ .Values.service.http.type }}
+  ports:
+    - port: {{ .Values.service.http.httpPort }}
+      targetPort: 80
+      name: http
+    - port: {{ .Values.service.http.httpsPort }}
+      targetPort: 443
+      name: https
+  selector:
+    name: {{ .Release.Name }}
+
+{{ end }}
