@@ -10,6 +10,9 @@ spec:
   ports:
     - port: {{ .Values.service.dhcp.port }}
       targetPort: 67
+      {{ if eq .Values.service.dhcp.type "NodePort" }}
+      nodePort: {{ .Values.service.dhcp.port }}
+      {{ end }}
       name: dhcp
   selector:
     name: {{ .Release.Name }}

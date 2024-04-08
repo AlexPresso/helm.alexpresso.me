@@ -10,6 +10,9 @@ spec:
   ports:
     - port: {{ .Values.service.dns.port }}
       targetPort: 53
+      {{ if eq .Values.service.dns.type "NodePort" }}
+      nodePort: {{ .Values.service.dns.port }}
+      {{ end }}
       name: dns
   selector:
     name: {{ .Release.Name }}
