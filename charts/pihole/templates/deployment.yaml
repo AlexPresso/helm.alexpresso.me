@@ -60,14 +60,14 @@ spec:
 
           livenessProbe:
             httpGet:
-              port: 80
+              port: 8443
               path: &probe-uri /admin
             initialDelaySeconds: 20
             periodSeconds: 20
             failureThreshold: 2
           readinessProbe:
             httpGet:
-              port: 80
+              port: 8443
               path: *probe-uri
             initialDelaySeconds: 10
             periodSeconds: 10
