@@ -18,8 +18,7 @@ service:
   http:
     enable: true
     type: LoadBalancer
-    httpPort: 8080
-    httpsPort: 8443
+    port: 8080
 
 resources:
   requests:
