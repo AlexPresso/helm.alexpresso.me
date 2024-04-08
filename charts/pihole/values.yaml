@@ -299,8 +299,7 @@ doh:
   pullPolicy: IfNotPresent
   # -- Here you can pass environment variables to the DoH container, for example:
   envVars:
-    CLOUDFLARED_OPTS: "--port 5053 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query"
-    # TUNNEL_DNS_UPSTREAM: "https://1.1.1.2/dns-query,https://1.0.0.2/dns-query"
+    TUNNEL_DNS_UPSTREAM: "https://1.1.1.1/dns-query,https://1.0.0.1/dns-query"
 
   # -- Probes configuration
   probes:
@@ -527,7 +526,7 @@ podDnsConfig:
   policy: "None"
   nameservers:
     - 127.0.0.1
-    - 8.8.8.8
+    - 1.1.1.1
 
 # -- configure a Pod Disruption Budget
 podDisruptionBudget:
