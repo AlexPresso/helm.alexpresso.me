@@ -1,0 +1,17 @@
+{{ if .Values.service.dhcp.enable }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-dhcp
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: {{ .Values.service.dhcp.type }}
+  ports:
+    - port: {{ .Values.service.dhcp.port }}
+      targetPort: 67
+      name: dhcp
+  selector:
+    name: {{ .Release.Name }}
+
+{{ end }}

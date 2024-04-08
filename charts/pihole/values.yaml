@@ -6,6 +6,21 @@ dns:
   - 1.1.1.1
   - 1.0.0.1
 
+service:
+  dns:
+    enable: true
+    type: NodePort
+    port: 53
+  dhcp:
+    enable: true
+    type: NodePort
+    port: 67
+  http:
+    enable: true
+    type: NodePort
+    httpPort: 80
+    httpsPort: 443
+
 resources:
   requests:
     cpu: 100m
