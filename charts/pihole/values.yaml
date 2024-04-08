@@ -298,7 +298,8 @@ doh:
   # -- Pull policy
   pullPolicy: IfNotPresent
   # -- Here you can pass environment variables to the DoH container, for example:
-  envVars: {}
+  envVars:
+    CLOUDFLARED_OPTS: "--port 5053 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query"
     # TUNNEL_DNS_UPSTREAM: "https://1.1.1.2/dns-query,https://1.0.0.2/dns-query"
 
   # -- Probes configuration
