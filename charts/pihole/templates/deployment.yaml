@@ -68,10 +68,8 @@ spec:
           args:
             - proxy-dns
           env:
-            - name: TUNNEL_METRICS
-              value: &broadcast "0.0.0.0"
             - name: TUNNEL_DNS_ADDRESS
-              value: *broadcast
+              value: "0.0.0.0"
             - name: TUNNEL_DNS_PORT
               value: "5053"
             - name: TUNNEL_DNS_UPSTREAM
