@@ -10,15 +10,9 @@ spec:
   ports:
     - port: {{ .Values.service.http.httpPort }}
       targetPort: 80
-      {{ if eq .Values.service.http.type "NodePort" }}
-      nodePort: {{ .Values.service.http.httpPort }}
-      {{ end }}
       name: http
     - port: {{ .Values.service.http.httpsPort }}
       targetPort: 443
-      {{ if eq .Values.service.http.type "NodePort" }}
-      nodePort: {{ .Values.service.http.httpsPort }}
-      {{ end }}
       name: https
   selector:
     name: {{ .Release.Name }}
