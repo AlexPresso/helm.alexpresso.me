@@ -108,8 +108,8 @@ spec:
         - name: cloudflared
           image: "{{ .Values.doh.repository }}:{{ .Values.doh.tag }}"
           imagePullPolicy: {{ .Values.doh.pullPolicy }}
-          command:
-            - "/usr/local/bin/cloudflared proxy-dns $CLOUDFLARED_OPTS"
+          args:
+            - "proxy-dns"
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           resources:
@@ -122,8 +122,14 @@ spec:
             - containerPort: 49312
               name: cloudflared-met
               protocol: TCP
-          {{- if .Values.doh.envVars }}
           env:
+            - name: "TUNNEL_METRICS"
+              value: "0.0.0.0"
+            - name: "TUNNEL_DNS_ADDRESS"
+              value: "0.0.0.0"
+            - name: "TUNNEL_DNS_PORT"
+              value: "5053"
+          {{- if .Values.doh.envVars }}
             {{- range $key, $value := .Values.doh.envVars }}
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
