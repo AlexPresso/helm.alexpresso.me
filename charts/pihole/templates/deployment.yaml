@@ -108,6 +108,8 @@ spec:
         - name: cloudflared
           image: "{{ .Values.doh.repository }}:{{ .Values.doh.tag }}"
           imagePullPolicy: {{ .Values.doh.pullPolicy }}
+          command:
+            - "/usr/local/bin/cloudflared proxy-dns $CLOUDFLARED_OPTS"
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           resources:
