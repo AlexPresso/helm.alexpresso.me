@@ -43,7 +43,7 @@ spec:
             - name: TZ
               value: {{ .Values.timezone | quote }}
             - name: WEB_PORT
-              value: "8443"
+              value: "8080"
             - name: WEBPASSWORD
               valueFrom:
                 secretKeyRef:
@@ -60,14 +60,14 @@ spec:
 
           livenessProbe:
             httpGet:
-              port: 8443
+              port: 8080
               path: &probe-uri /admin
             initialDelaySeconds: 20
             periodSeconds: 20
             failureThreshold: 2
           readinessProbe:
             httpGet:
-              port: 8443
+              port: 8080
               path: *probe-uri
             initialDelaySeconds: 10
             periodSeconds: 10
