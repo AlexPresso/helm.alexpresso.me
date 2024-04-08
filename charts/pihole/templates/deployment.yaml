@@ -32,11 +32,11 @@ spec:
                   key: webpassword
                   name: {{ .Release.Name }}-secrets
             - name: PIHOLE_DNS_
-              {{if .Values.cloudflareDoh.enable }}
+              {{ if .Values.cloudflareDoh.enable }}
               value: "127.0.0.1#5053"
-              {{-else}}
+              {{ else }}
               value: {{ join "," .Values.dns }}
-              {{-end}}
+              {{ end }}
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
 
@@ -74,4 +74,4 @@ spec:
 {{- toYaml .Values.cloudflareDoh.resources | nindent 12 }}
           ports:
             - containerPort: 5053
-      {{-end}}7
+      {{ end }}

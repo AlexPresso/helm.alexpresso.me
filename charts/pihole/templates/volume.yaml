@@ -1,10 +1,10 @@
 apiVersion: "v1"
 kind: "PersistentVolumeClaim"
 metadata:
-{{- if .Values.volume.annotations }}
+{{ if .Values.volume.annotations }}
   annotations:
 {{ toYaml .Values.volume.annotations | indent 4 }}
-{{- end }}
+{{ end }}
   labels:
     app: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -18,10 +18,10 @@ spec:
     requests:
       storage: "{{ .Values.volume.size }}"
 
-{{- if .Values.volume.storageClass }}
-  {{- if (eq "-" .Values.volume.storageClass) }}
+{{ if .Values.volume.storageClass }}
+  {{ if (eq "-" .Values.volume.storageClass) }}
   storageClassName: ""
-  {{- else }}
+  {{ else }}
   storageClassName: "{{ .Values.volume.storageClass }}"
-  {{- end }}
-{{- end }}
+  {{ end }}
+{{ end }}
