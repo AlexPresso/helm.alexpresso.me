@@ -1,3 +1,4 @@
+{{ if eq .Values.service.hostNetwork "false" }}
 {{ if .Values.service.dns.enable }}
 
 apiVersion: v1
@@ -14,4 +15,5 @@ spec:
   selector:
     name: {{ .Release.Name }}
 
+{{ end }}
 {{ end }}
