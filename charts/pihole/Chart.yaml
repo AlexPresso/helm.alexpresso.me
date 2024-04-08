@@ -3,7 +3,7 @@ description: Installs pihole in kubernetes
 home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
 name: pihole
 appVersion: "latest"
-version: 1.0.2
+version: 1.0.3
 sources:
   - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
   - https://pi-hole.net/
@@ -11,5 +11,4 @@ sources:
   - https://github.com/pi-hole/docker-pi-hole
 icon: https://wp-cdn.pi-hole.net/wp-content/uploads/2016/12/Vortex-R.png
 maintainers:
-  - name: MoJo2600
-    email: christian.erhardt@mojo2k.de
+  - name: AlexPresso
