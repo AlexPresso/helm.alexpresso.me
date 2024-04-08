@@ -11,6 +11,9 @@ spec:
       labels:
         name: {{ .Release.Name }}
     spec:
+      {{ if .Values.service.dhcp.enable }}
+      hostNetwork: true
+      {{ end }}
       volumes:
         - name: {{ .Release.Name }}
           persistentVolumeClaim:
