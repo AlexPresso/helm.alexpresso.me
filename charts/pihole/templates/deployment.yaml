@@ -24,6 +24,13 @@ spec:
               name: {{ .Release.Name }}
             - mountPath: /etc/dsnmasq.d
               name: {{ .Release.Name }}
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - NET_BIND_SERVICE
+                - NET_RAW
+                - NET_ADMIN
           ports:
             - containerPort: 80
             - containerPort: 443
