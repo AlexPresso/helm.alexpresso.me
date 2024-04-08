@@ -20,7 +20,9 @@ spec:
           image: ghcr.io/pi-hole/pihole
           imagePullPolicy: IfNotPresent
           volumeMounts:
-            - mountPath: /etc
+            - mountPath: /etc/pihole
+              name: {{ .Release.Name }}
+            - mountPath: /etc/dsnmasq.d
               name: {{ .Release.Name }}
           ports:
             - containerPort: 80
@@ -59,7 +61,7 @@ spec:
             periodSeconds: 10
             failureThreshold: 2
 
-      {{ if .Values.cloudflareDoh.enabled }}
+      {{ if .Values.cloudflareDoh.enable }}
         - name: {{ .Release.Name }}-cloudflared
           image: cloudflare/cloudflared
           imagePullPolicy: IfNotPresent
