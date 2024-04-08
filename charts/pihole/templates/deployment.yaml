@@ -35,13 +35,15 @@ spec:
                 - NET_RAW
                 - NET_ADMIN
           ports:
-            - containerPort: 80
-            - containerPort: 443
+            - containerPort: 8080
+            - containerPort: 8443
             - containerPort: 53
             - containerPort: 67
           env:
             - name: TZ
               value: {{ .Values.timezone | quote }}
+            - name: WEB_PORT
+              value: "8443"
             - name: WEBPASSWORD
               valueFrom:
                 secretKeyRef:
