@@ -11,6 +11,10 @@ spec:
       labels:
         name: {{ .Release.Name }}
     spec:
+      volumes:
+        - name: {{ .Release.Name }}
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
       containers:
         - name: {{ .Release.Name }}
           image: ghcr.io/pi-hole/pihole
