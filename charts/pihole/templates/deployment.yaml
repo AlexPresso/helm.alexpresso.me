@@ -50,16 +50,16 @@ spec:
             httpGet:
               port: 80
               path: &probe-uri /admin
-            initialDelaySeconds: 10
+            initialDelaySeconds: 20
             periodSeconds: 20
             failureThreshold: 2
           readinessProbe:
             httpGet:
               port: 80
               path: *probe-uri
-            initialDelaySeconds: 5
+            initialDelaySeconds: 10
             periodSeconds: 10
-            failureThreshold: 2
+            failureThreshold: 4
 
       {{ if .Values.cloudflareDoh.enable }}
         - name: {{ .Release.Name }}-cloudflared
