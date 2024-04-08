@@ -9,15 +9,15 @@ dns:
 service:
   dns:
     enable: true
-    type: NodePort
+    type: LoadBalancer
     port: 53
   dhcp:
-    enable: true
-    type: NodePort
+    enable: false
+    type: LoadBalancer
     port: 67
   http:
     enable: true
-    type: NodePort
+    type: LoadBalancer
     httpPort: 80
     httpsPort: 443
 
