@@ -9,6 +9,7 @@ spec:
   type: {{ .Values.service.dhcp.type }}
   ports:
     - port: {{ .Values.service.dhcp.port }}
+      protocol: UDP
       targetPort: 67
       name: dhcp
   selector:
