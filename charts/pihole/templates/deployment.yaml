@@ -32,9 +32,9 @@ spec:
               name: {{ .Release.Name }}
             - mountPath: /etc/dsnmasq.d
               name: {{ .Release.Name }}
-            - mountPath: /etc/pihole/adlist.list
+            - mountPath: /etc/pihole/adlists.list
               name: {{ .Release.Name }}-lists
-              subPath: adlist.list
+              subPath: adlists.list
             - mountPath: /etc/pihole/whitelist.txt
               name: {{ .Release.Name }}-lists
               subPath: whitelist.txt

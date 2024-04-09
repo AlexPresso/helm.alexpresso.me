@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-lists
 data:
-  adlist.list: |
+  adlists.list: |
   {{- range .Values.dns.adlist }}
     {{ . }}
   {{- end }}
