@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-lists
+data:
+  adlist.list: |
+  {{- range .Values.dns.adlist }}
+    {{ . }}
+  {{- end }}
+
+  whitelist.txt: |
+  {{- range .Values.dns.whitelist }}
+    {{ . }}
+  {{- end }}
+
+  blacklist.txt: |
+  {{- range .Values.dns.blacklist }}
+    {{ . }}
+  {{- end }}

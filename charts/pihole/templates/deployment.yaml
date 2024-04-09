@@ -11,13 +11,18 @@ spec:
       labels:
         name: {{ .Release.Name }}
     spec:
-      {{ if .Values.service.hostNetwork }}
+      {{ if .Values.hostNetwork }}
       hostNetwork: true
       {{ end }}
       volumes:
         - name: {{ .Release.Name }}
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}
+        - name: {{ .Release.Name }}-lists
+          configMap:
+            name: {{ .Release.Name }}-lists
+            defaultMode: 420
+
       containers:
         - name: {{ .Release.Name }}
           image: ghcr.io/pi-hole/pihole
@@ -27,6 +32,15 @@ spec:
               name: {{ .Release.Name }}
             - mountPath: /etc/dsnmasq.d
               name: {{ .Release.Name }}
+            - mountPath: /etc/pihole/adlist.list
+              name: {{ .Release.Name }}-lists
+              subPath: adlist.list
+            - mountPath: /etc/pihole/whitelist.txt
+              name: {{ .Release.Name }}-lists
+              subPath: whitelist.txt
+            - mountPath: /etc/pihole/blacklist.txt
+              name: {{ .Release.Name }}-lists
+              subPath: blacklist.txt
           securityContext:
             capabilities:
               add:
@@ -34,8 +48,13 @@ spec:
                 - NET_BIND_SERVICE
                 - NET_RAW
           ports:
+            {{ if .Values.hostNetwork }}
+            - containerPort: {{ .Values.webinterface.port }}
+              protocol: TCP
+            {{ else }}
             - containerPort: 8080
               protocol: TCP
+            {{ end }}
             - containerPort: 53
               protocol: UDP
             - containerPort: 53
@@ -56,21 +75,39 @@ spec:
               {{ if .Values.cloudflareDoh.enable }}
               value: "127.0.0.1#5053"
               {{ else }}
-              value: {{ join "," .Values.dns }}
+              value: {{ join "," .Values.dns.servers }}
               {{ end }}
+            {{ if .Values.dhcp.enable }}
+            - name: DHCP_ACTIVE
+              value: "true"
+            - name: DHCP_START
+              value: {{ .Values.dhcp.ip.rangeStart | quote }}
+            - name: DHCP_END
+              value: {{ .Values.dhcp.ip.rangeEnd | quote }}
+            - name: DHCP_ROUTER
+              value: {{ .Values.dhcp.ip.router | quote }}
+            {{ end }}
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
 
           livenessProbe:
             httpGet:
+              {{ if .Values.hostNetwork }}
+              port: {{ .Values.webinterface.port }}
+              {{ else }}
               port: 8080
+              {{ end }}
               path: &probe-uri /admin
             initialDelaySeconds: 20
             periodSeconds: 20
             failureThreshold: 2
           readinessProbe:
             httpGet:
+              {{ if .Values.hostNetwork }}
+              port: {{ .Values.webinterface.port }}
+              {{ else }}
               port: 8080
+              {{ end }}
               path: *probe-uri
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -90,7 +127,12 @@ spec:
             - name: TUNNEL_DNS_UPSTREAM
               value: {{ join "," .Values.cloudflareDoh.upstreams }}
           resources:
-{{- toYaml .Values.cloudflareDoh.resources | nindent 12 }}
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
           ports:
             - containerPort: 5053
       {{ end }}

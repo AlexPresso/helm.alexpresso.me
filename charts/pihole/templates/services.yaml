@@ -1,0 +1,68 @@
+{{ if not .Values.hostNetwork }}
+
+{{ if .Values.webinterface.service.enable }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-http
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: {{ .Values.webinterface.service.type }}
+  ports:
+    - port: {{ .Values.webinterface.port }}
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+    name: {{ .Release.Name }}
+
+{{ end }}
+
+{{ if .Values.dhcp.enable }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-dhcp
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: {{ .Values.dhcp.service.type }}
+  ports:
+    - port: {{ .Values.dhcp.service.port }}
+      protocol: UDP
+      targetPort: 67
+      name: dhcp
+  selector:
+    name: {{ .Release.Name }}
+
+{{ end }}
+
+{{ if .Values.dns.service.enable }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-dns
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: {{ .Values.dns.service.type }}
+  ports:
+    - port: {{ .Values.dns.service.port }}
+      protocol: UDP
+      targetPort: 53
+      name: dns-udp
+    - port: {{ .Values.dns.service.port }}
+      protocol: TCP
+      targetPort: 53
+      name: dns-tcp
+  selector:
+    name: {{ .Release.Name }}
+
+{{ end }}
+
+{{ end }}

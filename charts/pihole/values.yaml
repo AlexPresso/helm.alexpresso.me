@@ -1,25 +1,54 @@
 timezone: "America/Chicago"
-webpassword: #Set your own
 
-#Overridden if enabling CloudFlare DoH
+hostNetwork: false #Highly recommended if enabling DHCP
+
+webinterface:
+  port: 8080 #used as hostPort or servicePort depending on above boolean :)
+  service:
+    enable: true #Disabled if hostNetwork == true
+    type: LoadBalancer
+
 dns:
-  - 1.1.1.1
-  - 1.0.0.1
+  adlist:
+    - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+    - https://blocklistproject.github.io/Lists/phishing.txt
+    - https://blocklistproject.github.io/Lists/redirect.txt
+    - https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt
+    #Prevents local iOS devices from enforcing Apple's DoH :
+    - https://raw.githubusercontent.com/oneoffdallas/dohservers/master/list.txt
+    - https://raw.githubusercontent.com/dibdot/DoH-IP-blocklists/master/doh-domains.txt
+  whitelist: []
+  blacklist: []
 
-service:
-  hostNetwork: false
-  dns:
-    enable: true
+  #Overridden if enabling CloudFlare DoH
+  servers:
+    - 1.1.1.1
+    - 1.0.0.1
+#    - 2606:4700:4700::1111
+#    - 2606:4700:4700::1001
+  service:
+    enable: true #Disabled anyway if hostNetwork == true
     type: LoadBalancer
     port: 53
-  dhcp:
-    enable: false #requires hostNetwork: true
+
+dhcp:
+  enable: false
+  ip:
+    router: 192.168.1.1
+    rangeStart: 192.168.1.201
+    rangeEnd: 192.168.1.251
+  service:
+    enable: false #Disabled anyway if hostNetwork == true
     type: LoadBalancer
     port: 67
-  http:
-    enable: true
-    type: LoadBalancer
-    port: 8080
+
+cloudflareDoh:
+  enable: true
+  upstreams:
+    - https://1.1.1.1/dns-query
+    - https://1.0.0.1/dns-query
+#    - https://[2606:4700:4700::1111]/dns-query
+#    - https://[2606:4700:4700::1001]/dns-query
 
 resources:
   requests:
@@ -27,24 +56,9 @@ resources:
     memory: 256Mi
   limits:
     cpu: 200m
-    memory: 256Mi
+    memory: 512Mi
 
 volume:
   annotations:
   storageClass: ""
   size: 1Gi
-
-cloudflareDoh:
-  enable: true
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
-    limits:
-      cpu: 100m
-      memory: 128Mi
-  upstreams:
-    - https://1.1.1.1/dns-query
-    - https://1.0.0.1/dns-query
-#    - https://[2606:4700:4700::1111]/dns-query
-#    - https://[2606:4700:4700::1001]/dns-query
