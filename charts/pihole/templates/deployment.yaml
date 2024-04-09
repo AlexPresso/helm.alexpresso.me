@@ -30,7 +30,7 @@ spec:
           volumeMounts:
             - mountPath: /etc/pihole
               name: {{ .Release.Name }}
-            - mountPath: /etc/dsnmasq.d
+            - mountPath: /etc/dnsmasq.d
               name: {{ .Release.Name }}
             - mountPath: /etc/pihole/adlists.list
               name: {{ .Release.Name }}-lists
@@ -41,12 +41,17 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
+            - mountPath: /etc/dnsmasq.d/04-pihole-static-dhcp.conf
+              name: {{ .Release.Name }}-lists
+              subPath: pihole-static-dhcp.conf
           securityContext:
             capabilities:
               add:
                 - NET_ADMIN
                 - NET_BIND_SERVICE
                 - NET_RAW
+                - SYS_NICE
+                - CHOWN
           ports:
             {{ if .Values.hostNetwork }}
             - containerPort: {{ .Values.webinterface.port }}

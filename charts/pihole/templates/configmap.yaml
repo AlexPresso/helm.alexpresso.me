@@ -17,3 +17,8 @@ data:
   {{- range .Values.dns.blacklist }}
     {{ . }}
   {{- end }}
+
+  pihole-static-dhcp.conf: |
+  {{- range .Values.dhcp.ip.staticIps }}
+    {{ . }}
+  {{- end}}
