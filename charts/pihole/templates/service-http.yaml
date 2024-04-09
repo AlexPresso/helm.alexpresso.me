@@ -1,5 +1,4 @@
-{{ if eq .Values.service.hostNetwork "false" }}
-{{ if .Values.service.http.enable }}
+{{ if and .Values.service.http.enable (not .Values.service.hostNetwork) }}
 
 apiVersion: v1
 kind: Service
@@ -15,5 +14,4 @@ spec:
   selector:
     name: {{ .Release.Name }}
 
-{{ end }}
 {{ end }}
