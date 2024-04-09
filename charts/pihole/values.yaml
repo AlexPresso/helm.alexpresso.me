@@ -39,7 +39,7 @@ dhcp:
     rangeStart: 192.168.1.201
     rangeEnd: 192.168.1.251
     staticIps: []
-#      - dhcp-host=MAC_ADDRESS,IP_ADDRESS,HOSTNAME
+#      - MAC_ADDRESS,IP_ADDRESS,HOSTNAME
   service:
     enable: false #Disabled anyway if hostNetwork == true
     type: LoadBalancer

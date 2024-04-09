@@ -20,5 +20,5 @@ data:
 
   pihole-static-dhcp.conf: |
   {{- range .Values.dhcp.ip.staticIps }}
-    {{ . }}
+    dhcp-host={{ . }}
   {{- end}}
