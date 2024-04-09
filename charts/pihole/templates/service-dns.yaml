@@ -9,8 +9,13 @@ spec:
   type: {{ .Values.service.dns.type }}
   ports:
     - port: {{ .Values.service.dns.port }}
+      protocol: UDP
       targetPort: 53
-      name: dns
+      name: dns-udp
+    - port: {{ .Values.service.dns.port }}
+      protocol: TCP
+      targetPort: 53
+      name: dns-tcp
   selector:
     name: {{ .Release.Name }}
 
