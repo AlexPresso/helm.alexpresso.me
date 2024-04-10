@@ -8,6 +8,7 @@ metadata:
   name: {{ .Release.Name }}-svc-http
   namespace: {{ .Release.Namespace }}
 spec:
+  externalTrafficPolicy: Local
   type: {{ .Values.webinterface.service.type }}
   ports:
     - port: {{ .Values.webinterface.port }}
@@ -29,6 +30,7 @@ metadata:
   name: {{ .Release.Name }}-svc-dhcp
   namespace: {{ .Release.Namespace }}
 spec:
+  externalTrafficPolicy: Local
   type: {{ .Values.dhcp.service.type }}
   ports:
     - port: {{ .Values.dhcp.service.port }}
@@ -50,6 +52,7 @@ metadata:
   name: {{ .Release.Name }}-svc-dns
   namespace: {{ .Release.Namespace }}
 spec:
+  externalTrafficPolicy: Local
   type: {{ .Values.dns.service.type }}
   ports:
     - port: {{ .Values.dns.service.port }}

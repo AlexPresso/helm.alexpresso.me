@@ -13,8 +13,13 @@ spec:
     spec:
       {{ if .Values.hostNetwork }}
       hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       {{ end }}
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        {{- range .Values.dns.servers }}
+          - {{ . }}
+        {{- end }}
       volumes:
         - name: {{ .Release.Name }}
           persistentVolumeClaim:
@@ -81,7 +86,7 @@ spec:
               {{ if .Values.cloudflareDoh.enable }}
               value: "127.0.0.1#5053"
               {{ else }}
-              value: {{ join "," .Values.dns.servers }}
+              value: {{ join ";" .Values.dns.servers }}
               {{ end }}
             - name: CUSTOM_CACHE_SIZE
               value: {{ .Values.dns.cacheSize | quote }}
@@ -135,12 +140,7 @@ spec:
             - name: TUNNEL_DNS_UPSTREAM
               value: {{ join "," .Values.cloudflareDoh.upstreams }}
           resources:
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              cpu: 200m
-              memory: 256Mi
+{{- toYaml .Values.cloudflareDoh.resources | nindent 12 }}
           ports:
             - containerPort: 5053
       {{ end }}
