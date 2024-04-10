@@ -24,7 +24,7 @@ dns:
   cacheSize: 10000
   dnsSec: true #Requires cacheSize >= 100
 
-  #Overridden by CloudFlare DoH if enabled **BUT** also used as pod nameservers
+  #Overridden by CloudFlare DoH if enabled
   servers:
     - 1.1.1.1
     - 1.0.0.1

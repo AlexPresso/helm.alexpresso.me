@@ -14,12 +14,6 @@ spec:
       {{ if .Values.hostNetwork }}
       hostNetwork: true
       {{ end }}
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-        {{- range .Values.dns.servers }}
-          - {{ . }}
-        {{- end }}
       volumes:
         - name: {{ .Release.Name }}
           persistentVolumeClaim:
