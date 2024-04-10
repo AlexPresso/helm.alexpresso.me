@@ -21,6 +21,8 @@ dns:
   whitelist: []
   blacklist: []
 
+  cacheSize: 10000
+
   #Overridden if enabling CloudFlare DoH
   servers:
     - 1.1.1.1

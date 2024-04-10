@@ -30,8 +30,6 @@ spec:
           volumeMounts:
             - mountPath: /etc/pihole
               name: {{ .Release.Name }}
-            - mountPath: /etc/dnsmasq.d
-              name: {{ .Release.Name }}
             - mountPath: /etc/pihole/adlists.list
               name: {{ .Release.Name }}-lists
               subPath: adlists.list
@@ -41,9 +39,11 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
+            {{ if .Values.dhcp.enable }}
             - mountPath: /etc/dnsmasq.d/04-pihole-static-dhcp.conf
               name: {{ .Release.Name }}-lists
               subPath: pihole-static-dhcp.conf
+            {{ end }}
           securityContext:
             capabilities:
               add:
@@ -82,6 +82,8 @@ spec:
               {{ else }}
               value: {{ join "," .Values.dns.servers }}
               {{ end }}
+            - name: CUSTOM_CACHE_SIZE
+              value: {{ .Values.dns.cacheSize | quote }}
             {{ if .Values.dhcp.enable }}
             - name: DHCP_ACTIVE
               value: "true"
