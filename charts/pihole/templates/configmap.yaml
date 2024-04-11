@@ -22,3 +22,11 @@ data:
   {{- range .Values.dhcp.ip.staticIps }}
     dhcp-host={{ . }}
   {{- end}}
+
+  02-custom.conf: |
+    addn-hosts=/etc/pihole/addn-hosts
+
+  addn-hosts: |
+  {{- range .Values.dns.customDnsEntries }}
+    address={{ . }}
+  {{- end}}

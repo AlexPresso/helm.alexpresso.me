@@ -27,6 +27,10 @@ spec:
         - name: {{ .Release.Name }}
           image: ghcr.io/pi-hole/pihole
           imagePullPolicy: IfNotPresent
+          lifecycle: #Quick and dirty (I know you like it) fix to Gravity not using injected ad lists without update
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "pihole updateGravity"]
           volumeMounts:
             - mountPath: /etc/pihole
               name: {{ .Release.Name }}
@@ -39,6 +43,12 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
+            - mountPath: /etc/pihole/addn-hosts
+              name: {{ .Release.Name }}-lists
+              subPath: addn-hosts
+            - mountPath: /etc/dnsmasq.d/02-custom.conf
+              name: {{ .Release.Name }}-lists
+              subPath: 02-custom.conf
             {{ if .Values.dhcp.enable }}
             - mountPath: /etc/dnsmasq.d/04-pihole-static-dhcp.conf
               name: {{ .Release.Name }}-lists
