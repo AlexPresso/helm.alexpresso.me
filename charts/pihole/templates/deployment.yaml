@@ -39,11 +39,17 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
+            - mountPath: /etc/pihole/custom.list #Custom DNS A entries
+              name: {{ .Release.Name }}-lists
+              subPath: custom.list
             {{ if .Values.dhcp.enable }}
             - mountPath: /etc/dnsmasq.d/04-pihole-static-dhcp.conf
               name: {{ .Release.Name }}-lists
               subPath: pihole-static-dhcp.conf
             {{ end }}
+            - mountPath: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+              name: {{ .Release.Name }}-lists
+              subPath: 05-pihole-custom-cname.conf
           securityContext:
             capabilities:
               add:
@@ -116,7 +122,7 @@ spec:
               port: 8080
               {{ end }}
               path: *probe-uri
-            initialDelaySeconds: 10
+            initialDelaySeconds: 5
             periodSeconds: 10
             failureThreshold: 4
 

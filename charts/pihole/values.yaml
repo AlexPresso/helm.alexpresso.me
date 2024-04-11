@@ -24,6 +24,13 @@ dns:
   cacheSize: 10000
   dnsSec: true #Requires cacheSize >= 100
 
+  customDnsEntries:
+    cname: []
+#      - cname=CNAME record,DNS record
+#      - cname.foo.bar,foo.bar
+    a: []
+#      - 192.168.1.202 domain.local
+
   #Overridden by CloudFlare DoH if enabled
   servers:
     - 1.1.1.1
@@ -44,6 +51,7 @@ dhcp:
     rangeEnd: 192.168.1.251
     staticIps: []
 #      - MAC_ADDRESS,IP_ADDRESS,HOSTNAME
+#      - 00:00:00:00:00:00,192.168.1.202,AwesomeName
   service:
     enable: false #Disabled anyway if hostNetwork == true
     type: LoadBalancer

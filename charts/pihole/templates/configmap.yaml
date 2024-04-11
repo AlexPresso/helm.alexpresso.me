@@ -22,3 +22,13 @@ data:
   {{- range .Values.dhcp.ip.staticIps }}
     dhcp-host={{ . }}
   {{- end}}
+
+  custom.list: |
+  {{- range .Values.dns.customDnsEntries.a }}
+    {{ . }}
+  {{- end}}
+
+  05-pihole-custom-cname.conf: |
+  {{- range .Values.dns.customDnsEntries.cname }}
+      {{ . }}
+  {{- end}}
