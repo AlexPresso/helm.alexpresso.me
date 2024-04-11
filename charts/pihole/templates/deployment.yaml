@@ -103,6 +103,11 @@ spec:
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
 
+          startupProbe: #Quick and dirty (I know you like it) fix to Gravity not using injected ad list until updated
+            exec:
+              command: ["/bin/sh", "-c", "pihole updateGravity"]
+            failureThreshold: 30
+            periodSeconds: 10
           livenessProbe:
             httpGet:
               {{ if .Values.hostNetwork }}
