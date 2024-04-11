@@ -24,8 +24,12 @@ dns:
   cacheSize: 10000
   dnsSec: true #Requires cacheSize >= 100
 
-  customDnsEntries: []
-#    - mycustomdomain.lan/192.168.1.202
+  customDnsEntries:
+    cname: []
+#      - cname=CNAME record,DNS record
+#      - cname.foo.bar,foo.bar
+    a: []
+#      - domain.lan/192.168.1.202
 
   #Overridden by CloudFlare DoH if enabled
   servers:

@@ -43,12 +43,12 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
-            - mountPath: /etc/pihole/addn-hosts
-              name: {{ .Release.Name }}-lists
-              subPath: addn-hosts
             - mountPath: /etc/dnsmasq.d/02-custom.conf
               name: {{ .Release.Name }}-lists
               subPath: 02-custom.conf
+            - mountPath: /etc/dnsmasq.d/05-pihole-custom-cname.conf
+              name: {{ .Release.Name }}-lists
+              subPath: 05-pihole-custom-cname.conf
             {{ if .Values.dhcp.enable }}
             - mountPath: /etc/dnsmasq.d/04-pihole-static-dhcp.conf
               name: {{ .Release.Name }}-lists

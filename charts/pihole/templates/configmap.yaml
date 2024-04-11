@@ -24,9 +24,11 @@ data:
   {{- end}}
 
   02-custom.conf: |
-    addn-hosts=/etc/pihole/addn-hosts
+  {{- range .Values.dns.customDnsEntries.a }}
+    address=/{{ . }}
+  {{- end}}
 
-  addn-hosts: |
-  {{- range .Values.dns.customDnsEntries }}
-    address={{ . }}
+  05-pihole-custom-cname.conf: |
+  {{- range .Values.dns.customDnsEntries.cname }}
+      {{ . }}
   {{- end}}
