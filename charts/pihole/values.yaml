@@ -29,7 +29,7 @@ dns:
 #      - cname=CNAME record,DNS record
 #      - cname.foo.bar,foo.bar
     a: []
-#      - domain.lan 192.168.1.202
+#      - 192.168.1.202 domain.lan
 
   #Overridden by CloudFlare DoH if enabled
   servers:
