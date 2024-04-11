@@ -23,9 +23,9 @@ data:
     dhcp-host={{ . }}
   {{- end}}
 
-  02-custom.conf: |
+  custom.list: |
   {{- range .Values.dns.customDnsEntries.a }}
-    address=/{{ . }}
+    {{ . }}
   {{- end}}
 
   05-pihole-custom-cname.conf: |

@@ -39,9 +39,9 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
-            - mountPath: /etc/dnsmasq.d/02-custom.conf
+            - mountPath: /etc/pihole/custom.list #Custom DNS A entries
               name: {{ .Release.Name }}-lists
-              subPath: 02-custom.conf
+              subPath: custom.list
             {{ if .Values.dhcp.enable }}
             - mountPath: /etc/dnsmasq.d/04-pihole-static-dhcp.conf
               name: {{ .Release.Name }}-lists
