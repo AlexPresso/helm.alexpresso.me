@@ -39,15 +39,22 @@ spec:
             - containerPort: 8080
               protocol: TCP
           env:
-            - name: TZ
-              value: {{ .Values.timezone | quote }}
+            - name: SEARXNG_BIND_ADDRESS
+              value: "0.0.0.0"
+            - name: SEARXNG_PORT
+              value: "8080"
+            - name: SEARXNG_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: secretKey
+                  name: {{ .Release.Name }}-secrets
           resources:
 {{- toYaml .Values.searxng.resources | nindent 12 }}
 
           livenessProbe:
             httpGet:
               port: &probe-port 8080
-              path: &probe-uri /
+              path: &probe-uri /healthz
             initialDelaySeconds: 20
             periodSeconds: 20
             failureThreshold: 2

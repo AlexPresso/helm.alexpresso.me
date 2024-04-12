@@ -187,5 +187,13 @@ searxng:
       #
       #  extra_proxy_timeout: 10
 
-redis:
-  enabled: false
+  service:
+    enable: true
+    type: ClusterIP
+    ports:
+      - 80
+      - 443
+
+  ingress:
+    enable: true
+    host: searx.local

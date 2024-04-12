@@ -4,38 +4,4 @@ metadata:
   name: {{ .Release.Name }}-settings
 data:
   settings.yml: |
-    use_default_settings: false
-    general:
-      {{- toYaml .Values.searxng.settings.general | nindent 6 }}
-
-    brand:
-      {{- toYaml .Values.searxng.settings.brand | nindent 6 }}
-
-    search:
-      {{- toYaml .Values.searxng.settings.search | nindent 6 }}
-
-    ui:
-      {{- toYaml .Values.searxng.settings.ui | nindent 6 }}
-
-    outgoing:
-      {{- toYaml .Values.searxng.settings.outgoing | nindent 6 }}
-
-    server:
-      port: 8080
-      bind_address: "0.0.0.0"
-      base_url: false #If needed, must be done in ingress, not here.
-      limiter: {{ .Values.searxng.settings.server.limiter }}
-      public_instance: {{ .Values.searxng.settings.server.public_instance }}
-      secret_key: {{ .Values.searxng.settings.server.secret_key }}
-      image_proxy: {{ .Values.searxng.settings.server.image_proxy }}
-      http_protocol_version: "1.1"
-      method: "POST"
-      default_http_headers:
-        {{- toYaml .Values.searxng.settings.server.default_http_headers | nindent 8 }}
-
-    redis:
-      {{ if .Values.redis.enabled }}
-      url: {{ .Values.redis.url }}
-      {{ else }}
-      url: false
-      {{ end }}
+    {{ toYaml .Values.searxng.settings | b64enc | nindent 4 }}
