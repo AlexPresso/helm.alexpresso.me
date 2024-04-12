@@ -9,11 +9,14 @@ spec:
   externalTrafficPolicy: Local
   type: {{ .Values.searxng.service.type }}
   ports:
-  {{- range .Values.searxng.service.ports }}
-    - port: {{ . }}
+    - port: 80
+      name: http
       protocol: TCP
       targetPort: 8080
-  {{- end }}
+    - port: 443
+      name: http
+      protocol: TCP
+      targetPort: 8080
 
   selector:
     name: {{ .Release.Name }}
