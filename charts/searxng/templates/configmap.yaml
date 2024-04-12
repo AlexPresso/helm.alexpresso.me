@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-settings
 data:
   settings.yml: |
+    use_default_settings: false
     general:
       {{- toYaml .Values.searxng.settings.general | nindent 6 }}
 
