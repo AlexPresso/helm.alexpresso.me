@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: {{ .Release.Name }}-searxng
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-searxng
+        - name: {{ .Release.Name }}-redis
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-redis
+
+      containers:
+        - name: {{ .Release.Name }}
+          image: searxng/searxng
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /etc/searxng
+              name: {{ .Release.Name }}
+            - mountPath: /etc/searxng/settings.yml
+              name: {{ .Release.Name }}-settings
+              subPath: settings.yml
+          securityContext:
+            capabilities:
+              add:
+                - SETGID
+                - SETUID
+                - CHOWN
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: TZ
+              value: {{ .Values.timezone | quote }}
+          resources:
+{{- toYaml .Values.searxng.resources | nindent 12 }}
+
+          livenessProbe:
+            httpGet:
+              port: &probe-port 8080
+              path: &probe-uri /
+            initialDelaySeconds: 20
+            periodSeconds: 20
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              port: *probe-port
+              path: *probe-uri
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 4

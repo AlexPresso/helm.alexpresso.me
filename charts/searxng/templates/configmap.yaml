@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-settings
+data:
+  settings.yml: |
+    general:
+      {{- toYaml .Values.searxng.settings.general }}
+
+    brand:
+      {{- toYaml .Values.searxng.settings.brand }}
+
+    search:
+      {{- toYaml .Values.searxng.settings.search }}
+
+    ui:
+      {{- toYaml .Values.searxng.settings.ui }}
+
+    outgoing:
+      {{- toYaml .Values.searxng.settings.outgoing }}
+
+    plugins:
+    {{- range .Values.searxng.settings.plugins }}
+      {{ . }}
+    {{- end }}
+
+    server:
+      port: 8080
+      bind_address: "0.0.0.0"
+      base_url: false #If needed, must be done in ingress, not here.
+      limiter: {{ .Values.searxng.settings.server.limiter }}
+      public_instance: {{ .Values.searxng.settings.server.public_instance }}
+      secret_key: {{ .Values.searxng.settings.server.secret_key }}
+      image_proxy: {{ .Values.searxng.settings.server.image_proxy }}
+      http_protocol_version: "1.1"
+      method: "POST"
+      default_http_headers:
+        {{- toYaml .Values.searxng.settings.server.default_http_headers }}
+
+    redis:
+      {{ if .Values.redis.enabled }}
+      url: {{ .Values.redis.url }}
+      {{ else }}
+      url: false
+      {{ end }}
