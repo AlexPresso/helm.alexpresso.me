@@ -190,10 +190,11 @@ searxng:
   service:
     enable: true
     type: ClusterIP
+    externalTrafficPolicy: Local
     ports:
       - 80
       - 443
 
   ingress:
     enable: true
-    host: searx.local
+    host: searxng.local

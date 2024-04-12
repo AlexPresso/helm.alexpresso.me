@@ -1,4 +1,4 @@
-{{ if .Values.searxng.service.enable }}
+{{- if .Values.searxng.service.enable }}
 
 apiVersion: v1
 kind: Service
@@ -6,7 +6,10 @@ metadata:
   name: {{ .Release.Name }}-svc-http
   namespace: {{ .Release.Namespace }}
 spec:
-  externalTrafficPolicy: Local
+  {{- if or (eq "NodePort" .Values.searxng.service.type) (eq "LoadBalancer" .Values.searxng.service.type) }}
+  externalTrafficPolicy: {{ .Values.searxng.service.externalTrafficPolicy }}
+  {{- end }}
+
   type: {{ .Values.searxng.service.type }}
   ports:
     - port: 80
@@ -21,4 +24,4 @@ spec:
   selector:
     name: {{ .Release.Name }}
 
-{{ end }}
+{{- end }}
