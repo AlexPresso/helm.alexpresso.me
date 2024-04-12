@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /etc/searxng
-              name: {{ .Release.Name }}
+              name: {{ .Release.Name }}-searxng
             - mountPath: /etc/searxng/settings.yml
               name: {{ .Release.Name }}-settings
               subPath: settings.yml
