@@ -9,7 +9,7 @@ metadata:
     app: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-searxng
 
 spec:
   accessModes:
