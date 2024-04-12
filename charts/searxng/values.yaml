@@ -1,4 +1,8 @@
 searxng:
+  volume:
+    annotations:
+    storageClass: ""
+    size: 500Mi
   resources:
     requests:
       cpu: 200m
