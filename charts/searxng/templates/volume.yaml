@@ -1,9 +1,9 @@
 apiVersion: "v1"
 kind: "PersistentVolumeClaim"
 metadata:
-{{ if .Values.volume.annotations }}
+{{ if .Values.searxng.volume.annotations }}
   annotations:
-{{ toYaml .Values.volume.annotations | indent 4 }}
+{{ toYaml .Values.searxng.volume.annotations | indent 4 }}
 {{ end }}
   labels:
     app: {{ .Release.Name }}
@@ -16,12 +16,12 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: "{{ .Values.volume.size }}"
+      storage: "{{ .Values.searxng.volume.size }}"
 
-{{ if .Values.volume.storageClass }}
-  {{ if (eq "-" .Values.volume.storageClass) }}
+{{ if .Values.searxng.volume.storageClass }}
+  {{ if (eq "-" .Values.searxng.volume.storageClass) }}
   storageClassName: ""
   {{ else }}
-  storageClassName: "{{ .Values.volume.storageClass }}"
+  storageClassName: "{{ .Values.searxng.volume.storageClass }}"
   {{ end }}
 {{ end }}
