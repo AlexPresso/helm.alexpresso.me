@@ -18,9 +18,6 @@ spec:
         - name: {{ .Release.Name }}-settings
           configMap:
             name: {{ .Release.Name }}-settings
-        - name: {{ .Release.Name }}-redis
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-redis
 
       containers:
         - name: {{ .Release.Name }}
