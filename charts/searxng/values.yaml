@@ -26,11 +26,6 @@ searxng:
       # record stats
       enable_metrics: true
 
-    # External plugin configuration, for more details see
-    #   https://docs.searxng.org/dev/plugins.html
-    #
-    plugins: []
-
     brand:
       new_issue_url: https://github.com/searxng/searxng/issues/new
       docs_url: https://docs.searxng.org/

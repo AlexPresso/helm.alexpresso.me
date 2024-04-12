@@ -20,11 +20,6 @@ data:
     outgoing:
       {{- toYaml .Values.searxng.settings.outgoing | nindent 6 }}
 
-    plugins:
-    {{- range .Values.searxng.settings.plugins }}
-      {{ . }}
-    {{- end }}
-
     server:
       port: 8080
       bind_address: "0.0.0.0"
