@@ -12,6 +12,7 @@ searxng:
       memory: 128Mi
 
   settings:
+    use_default_settings: false
     general:
       debug: false
       # displayed name
