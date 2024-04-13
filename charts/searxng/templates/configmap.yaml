@@ -4,4 +4,5 @@ metadata:
   name: {{ .Release.Name }}-settings
 data:
   settings.yml: |-
+    use_default_settings: true
 {{ toYaml .Values.searxng.settings | nindent 4 }}
