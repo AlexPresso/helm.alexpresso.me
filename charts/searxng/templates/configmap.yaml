@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-settings
 data:
-  settings.yml: |
-    {{ toYaml .Values.searxng.settings | b64enc | nindent 4 }}
+  settings.yml: |-
+{{ toYaml .Values.searxng.settings | b64enc | nindent 4 }}
