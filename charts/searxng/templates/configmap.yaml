@@ -4,4 +4,4 @@ metadata:
   name: {{ .Release.Name }}-settings
 data:
   settings.yml: |-
-{{ toYaml .Values.searxng.settings | b64enc | nindent 4 }}
+{{ toYaml .Values.searxng.settings | nindent 4 }}
