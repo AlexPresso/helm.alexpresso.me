@@ -26,5 +26,5 @@ spec:
               service:
                 name: {{ .Release.Name }}-svc-http
                 port:
-                  number: 80
+                  number: {{ .Values.webinterface.port }}
 {{ end }}
