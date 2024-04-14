@@ -14,16 +14,15 @@ searxng:
     enable: true
     type: ClusterIP
     externalTrafficPolicy: Local
-    ports:
-      - 80
-      - 443
+    port: 80
   ingress:
     enable: true
     host: searxng.local
     tls: true
+    className: traefik
     annotations:
-      kubernetes.io/ingress.class: traefik
-      #cert-manager.io/issuer: selfsigned-issuer
+#      traefik.ingress.kubernetes.io/router.tls: "true"
+#      cert-manager.io/cluster-issuer: local-ca-issuer
 
   settings:
     #See https://docs.searxng.org/admin/installation-searxng.html#use-default-settings-yml

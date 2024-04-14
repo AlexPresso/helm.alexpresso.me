@@ -9,6 +9,7 @@ metadata:
   {{ toYaml .Values.searxng.ingress.annotations | indent 4 }}
   {{- end }}
 spec:
+  ingressClassName: {{ .Values.searxng.ingress.className }}
   {{- if .Values.searxng.ingress.tls }}
   tls:
     - hosts:
@@ -26,5 +27,5 @@ spec:
               service:
                 name: {{ .Release.Name }}-svc-http
                 port:
-                  number: 80
+                  number: {{ .Values.searxng.service.port }}
 {{ end }}

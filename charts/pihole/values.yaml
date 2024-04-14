@@ -76,8 +76,8 @@ ingress:
   tls: true
   className: traefik
   annotations:
-    #traefik.ingress.kubernetes.io/router.tls: "true"
-    #cert-manager.io/cluster-issuer: local-ca-issuer
+#    traefik.ingress.kubernetes.io/router.tls: "true"
+#    cert-manager.io/cluster-issuer: local-ca-issuer
 
 
 cloudflareDoh:
