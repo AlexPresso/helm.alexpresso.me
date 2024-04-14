@@ -1,5 +1,3 @@
-{{ if not .Values.hostNetwork }}
-
 {{ if .Values.webinterface.service.enable }}
 
 apiVersion: v1
@@ -68,4 +66,3 @@ spec:
 
 {{ end }}
 
-{{ end }}
