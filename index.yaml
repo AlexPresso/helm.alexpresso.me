@@ -1,5 +1,22 @@
 apiVersion: v1
 entries:
+  SearxNG:
+  - apiVersion: v1
+    appVersion: latest
+    created: "2024-04-14T23:06:56.848439295Z"
+    description: Installs SearxNG in kubernetes
+    digest: 87e80602a2500371e8a534fa92d80ae29e5434965a72210facee5b948d3ad633
+    home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/searxng
+    icon: https://docs.searxng.org/_static/searxng-wordmark.svg
+    maintainers:
+    - name: AlexPresso
+    name: SearxNG
+    sources:
+    - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/searxng
+    - https://github.com/searxng/searxng
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/SearxNG-0.0.1/SearxNG-0.0.1.tgz
+    version: 0.0.1
   judy-discord-bot:
   - apiVersion: v2
     appVersion: 0.19.0
@@ -58,6 +75,24 @@ entries:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/judy-discord-both-1.0.0/judy-discord-both-1.0.0.tgz
     version: 1.0.0
   pihole:
+  - apiVersion: v1
+    appVersion: latest
+    created: "2024-04-14T23:06:56.960448225Z"
+    description: Installs pihole in kubernetes
+    digest: 6cce0d836ffd21b6ecba1fbc67352c09e284ec8aba2347cfe2a80c91765ead5e
+    home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
+    icon: https://wp-cdn.pi-hole.net/wp-content/uploads/2016/12/Vortex-R.png
+    maintainers:
+    - name: AlexPresso
+    name: pihole
+    sources:
+    - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
+    - https://pi-hole.net/
+    - https://github.com/pi-hole
+    - https://github.com/pi-hole/docker-pi-hole
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/pihole-1.2.2/pihole-1.2.2.tgz
+    version: 1.2.2
   - apiVersion: v1
     appVersion: latest
     created: "2024-04-11T19:49:48.652194898Z"
@@ -546,4 +581,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2024-04-11T19:49:48.652302159Z"
+generated: "2024-04-14T23:06:56.960561225Z"
