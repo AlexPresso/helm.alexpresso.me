@@ -77,7 +77,7 @@ ingress:
   className: traefik
   annotations:
     #traefik.ingress.kubernetes.io/router.tls: "true"
-    #cert-manager.io/issuer: local-issuer
+    #cert-manager.io/cluster-issuer: local-ca-issuer
 
 
 cloudflareDoh:
