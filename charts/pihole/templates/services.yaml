@@ -18,7 +18,7 @@ spec:
 
 {{ end }}
 
-{{ if .Values.dhcp.enable }}
+{{ if .Values.dhcp.service.enable }}
 
 ---
 
