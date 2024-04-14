@@ -4,8 +4,7 @@ hostNetwork: false #Highly recommended if enabling DHCP
 
 webinterface:
   password: #Set your own
-  ports: #used as hostPort or servicePort depending on above boolean :)
-    - 8080
+  port: 8080 #used as hostPort or servicePort depending on above boolean :)
   service:
     enable: true
     type: LoadBalancer
