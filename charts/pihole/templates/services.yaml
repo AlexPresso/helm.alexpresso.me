@@ -11,10 +11,11 @@ spec:
   {{ end }}
   type: {{ .Values.webinterface.service.type }}
   ports:
-    - port: {{ .Values.webinterface.port }}
-      protocol: TCP
-      targetPort: 8080
-      name: http
+    {{- range .Values.webinterface.ports }}
+      - port: {{ . }}
+        protocol: TCP
+        targetPort: 8080
+    {{- end }}
   selector:
     name: {{ .Release.Name }}
 
