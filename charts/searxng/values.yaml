@@ -1,0 +1,52 @@
+searxng:
+  volume:
+    annotations:
+    storageClass: ""
+    size: 500Mi
+  resources:
+    requests:
+      cpu: 200m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+  service:
+    enable: true
+    type: ClusterIP
+    externalTrafficPolicy: Local
+    port: 80
+  ingress:
+    enable: true
+    host: searxng.local
+    tls: true
+    className: traefik
+    annotations:
+#      traefik.ingress.kubernetes.io/router.tls: "true"
+#      cert-manager.io/cluster-issuer: local-ca-issuer
+
+  settings:
+    #See https://docs.searxng.org/admin/installation-searxng.html#use-default-settings-yml
+    general:
+      debug: false
+      instance_name: "SearXNG"
+      enable_metrics: false
+
+    search:
+      safe_search: 0
+      default_lang: "auto"
+
+    server:
+      limiter: false
+      public_instance: false
+      secret_key: "ultrasecretkey"
+      image_proxy: true
+      default_http_headers:
+        X-Content-Type-Options: nosniff
+        X-Download-Options: noopen
+        X-Robots-Tag: noindex, nofollow
+        Referrer-Policy: no-referrer
+
+    outgoing:
+      request_timeout: 3.0
+      useragent_suffix: ""
+      enable_http2: true

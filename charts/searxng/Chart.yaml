@@ -1,0 +1,12 @@
+apiVersion: v1
+description: Installs SearxNG in kubernetes
+home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/searxng
+name: SearxNG
+appVersion: "latest"
+version: 0.0.1
+sources:
+  - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/searxng
+  - https://github.com/searxng/searxng
+icon: https://docs.searxng.org/_static/searxng-wordmark.svg
+maintainers:
+  - name: AlexPresso

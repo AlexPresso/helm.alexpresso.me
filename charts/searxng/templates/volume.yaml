@@ -1,0 +1,27 @@
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+{{ if .Values.searxng.volume.annotations }}
+  annotations:
+{{ toYaml .Values.searxng.volume.annotations | indent 4 }}
+{{ end }}
+  labels:
+    app: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ .Release.Name }}-searxng
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: "{{ .Values.searxng.volume.size }}"
+
+{{ if .Values.searxng.volume.storageClass }}
+  {{ if (eq "-" .Values.searxng.volume.storageClass) }}
+  storageClassName: ""
+  {{ else }}
+  storageClassName: "{{ .Values.searxng.volume.storageClass }}"
+  {{ end }}
+{{ end }}

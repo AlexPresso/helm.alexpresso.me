@@ -6,7 +6,7 @@ webinterface:
   password: #Set your own
   port: 8080 #used as hostPort or servicePort depending on above boolean :)
   service:
-    enable: true #Disabled if hostNetwork == true
+    enable: true
     type: LoadBalancer
 
 dns:
@@ -39,7 +39,7 @@ dns:
 #    - 2606:4700:4700::1001
 #    - 127.0.0.1
   service:
-    enable: true #Disabled anyway if hostNetwork == true
+    enable: true
     type: LoadBalancer
     port: 53
 
@@ -53,7 +53,7 @@ dhcp:
 #      - MAC_ADDRESS,IP_ADDRESS,HOSTNAME
 #      - 00:00:00:00:00:00,192.168.1.202,AwesomeName
   service:
-    enable: false #Disabled anyway if hostNetwork == true
+    enable: false
     type: LoadBalancer
     port: 67
 
@@ -69,6 +69,16 @@ volume:
   annotations:
   storageClass: ""
   size: 500Mi
+
+ingress:
+  enable: true
+  host: pihole.local
+  tls: true
+  className: traefik
+  annotations:
+#    traefik.ingress.kubernetes.io/router.tls: "true"
+#    cert-manager.io/cluster-issuer: local-ca-issuer
+
 
 cloudflareDoh:
   enable: true
