@@ -10,6 +10,20 @@ searxng:
     limits:
       cpu: 200m
       memory: 128Mi
+  service:
+    enable: true
+    type: ClusterIP
+    externalTrafficPolicy: Local
+    ports:
+      - 80
+      - 443
+  ingress:
+    enable: true
+    host: searxng.local
+    tls: true
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      #cert-manager.io/issuer: selfsigned-issuer
 
   settings:
     #See https://docs.searxng.org/admin/installation-searxng.html#use-default-settings-yml
@@ -37,15 +51,3 @@ searxng:
       request_timeout: 3.0
       useragent_suffix: ""
       enable_http2: true
-
-  service:
-    enable: true
-    type: ClusterIP
-    externalTrafficPolicy: Local
-    ports:
-      - 80
-      - 443
-
-  ingress:
-    enable: true
-    host: searxng.local

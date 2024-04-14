@@ -4,7 +4,18 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .Release.Name }}-ingress
+  annotations:
+  {{- if .Values.searxng.ingress.annotations }}
+  {{ toYaml .Values.searxng.ingress.annotations | indent 4 }}
+  {{- end }}
 spec:
+  {{- if .Values.searxng.ingress.tls.enable }}
+  tls:
+    - hosts:
+        - {{ .Values.searxng.ingress.host }}
+      secretName: {{ .Values.searxng.ingress.tls.secretName }}
+  {{- end }}
+
   rules:
     - host: {{ .Values.searxng.ingress.host }}
       http:
