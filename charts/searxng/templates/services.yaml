@@ -1,0 +1,23 @@
+{{- if .Values.searxng.service.enable }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-http
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- if or (eq "NodePort" .Values.searxng.service.type) (eq "LoadBalancer" .Values.searxng.service.type) }}
+  externalTrafficPolicy: {{ .Values.searxng.service.externalTrafficPolicy }}
+  {{- end }}
+
+  type: {{ .Values.searxng.service.type }}
+  ports:
+    - port: {{ .Values.searxng.service.port }}
+      name: http
+      protocol: TCP
+      targetPort: 8080
+
+  selector:
+    name: {{ .Release.Name }}
+
+{{- end }}
