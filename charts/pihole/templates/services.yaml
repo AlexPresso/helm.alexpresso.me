@@ -6,7 +6,9 @@ metadata:
   name: {{ .Release.Name }}-svc-http
   namespace: {{ .Release.Namespace }}
 spec:
+  {{ if or (eq .Values.webinterface.service.type "LoadBalancer") (eq .Values.webinterface.service.type "NodePort") }}
   externalTrafficPolicy: Local
+  {{ end }}
   type: {{ .Values.webinterface.service.type }}
   ports:
     - port: {{ .Values.webinterface.port }}
@@ -28,7 +30,9 @@ metadata:
   name: {{ .Release.Name }}-svc-dhcp
   namespace: {{ .Release.Namespace }}
 spec:
+  {{ if or (eq .Values.webinterface.service.type "LoadBalancer") (eq .Values.webinterface.service.type "NodePort") }}
   externalTrafficPolicy: Local
+  {{ end }}
   type: {{ .Values.dhcp.service.type }}
   ports:
     - port: {{ .Values.dhcp.service.port }}
@@ -50,7 +54,9 @@ metadata:
   name: {{ .Release.Name }}-svc-dns
   namespace: {{ .Release.Namespace }}
 spec:
+  {{ if or (eq .Values.webinterface.service.type "LoadBalancer") (eq .Values.webinterface.service.type "NodePort") }}
   externalTrafficPolicy: Local
+  {{ end }}
   type: {{ .Values.dns.service.type }}
   ports:
     - port: {{ .Values.dns.service.port }}
