@@ -11,6 +11,13 @@ spec:
       labels:
         name: {{ .Release.Name }}
     spec:
+      {{ if .Values.customDns.enable }}
+      dnsPolicy: Default
+      dnsConfig:
+        nameservers:
+          - {{ .Values.customDns.ip }}
+      {{ end }}
+
       volumes:
         - name: {{ .Release.Name }}
           persistentVolumeClaim:

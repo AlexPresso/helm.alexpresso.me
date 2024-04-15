@@ -17,6 +17,10 @@ service:
   externalTrafficPolicy: Local
   port: 51820
 
+customDns:
+  enable: false
+  ip: 10.43.27.26 #i.e pihole service IP
+
 config:
   PUID: "1000"
   PGID: "1000"
