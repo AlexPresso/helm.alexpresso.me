@@ -13,17 +13,14 @@ resources:
 
 service:
   enable: true
-  type: ClusterIP
+  type: LoadBalancer
   externalTrafficPolicy: Local
-  port: 80
+  port: 51820
 
 config:
   PUID: "1000"
   PGID: "1000"
   TZ: "America/Chicago"
   SERVERPORT: "51820"
-  SERVERURL: "<pihole.example.com>"
-  PEERS: "5"
-  PEERDNS: "10.43.0.30"
-  ALLOWEDIPS: "0.0.0.0/0, ::/0"
-  INTERNAL_SUBNET: "10.13.13.0"
+  SERVERURL: "wireguardhost.com"
+  PEERS: "3"
