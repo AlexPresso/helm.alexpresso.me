@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: {{ .Release.Name }}
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
+
+      containers:
+        - name: {{ .Release.Name }}
+          image: linuxserver/wireguard
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config
+          volumeMounts:
+            - mountPath: /config
+              name: {{ .Release.Name }}
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          ports:
+            - containerPort: 51820
+              protocol: UDP
+          resources:
+{{- toYaml .Values.resources | nindent 12 }}
