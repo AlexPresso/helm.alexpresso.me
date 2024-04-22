@@ -8,7 +8,7 @@ resources:
 
 volume:
   annotations: []
-  size: 500M
+  size: 500Mi
   storageClass:
 
 config:
@@ -37,5 +37,5 @@ config:
     client_id: #Your twitch app client ID
     client_secret: #Your twitch app client secret
   commands:
-    - birthdays
+    - addbirthday
     - infos
