@@ -6,6 +6,11 @@ resources:
     cpu: 200m
     memory: 1000Mi
 
+volume:
+  annotations: []
+  size: 500M
+  storageClass:
+
 config:
   bot:
     owner: #Your Discord ID
