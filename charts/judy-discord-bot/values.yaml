@@ -6,6 +6,11 @@ resources:
     cpu: 200m
     memory: 1000Mi
 
+volume:
+  annotations: []
+  size: 500Mi
+  storageClass:
+
 config:
   bot:
     owner: #Your Discord ID
@@ -32,5 +37,5 @@ config:
     client_id: #Your twitch app client ID
     client_secret: #Your twitch app client secret
   commands:
-    - birthdays
+    - addbirthday
     - infos

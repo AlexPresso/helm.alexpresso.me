@@ -11,9 +11,19 @@ spec:
       labels:
         name: {{ .Release.Name }}
     spec:
+      volumes:
+        - name: {{ .Release.Name }}
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}
+        - name: {{ .Release.Name }}-config-vol
+          configMap:
+            name: {{ .Release.Name }}-config
+        - name: timezone
+          hostPath:
+            path: /usr/share/zoneinfo
       containers:
         - name: application
-          image: ghcr.io/alexpresso/judy-discord-bot:0.18.0
+          image: ghcr.io/alexpresso/judy-discord-bot:0.23.0
           imagePullPolicy: IfNotPresent
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
@@ -22,14 +32,9 @@ spec:
             - name: {{ .Release.Name }}-config-vol
               mountPath: /opt/app/config.json
               subPath: config.json
+            - name: {{ .Release.Name }}
+              mountPath: data.json
             - name: timezone
               mountPath: /etc/localtime
               subPath: Europe/Paris
               readOnly: true
-      volumes:
-        - name: {{ .Release.Name }}-config-vol
-          configMap:
-            name: {{ .Release.Name }}-config
-        - name: timezone
-          hostPath:
-            path: /usr/share/zoneinfo
