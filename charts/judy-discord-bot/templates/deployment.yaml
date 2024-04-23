@@ -33,7 +33,7 @@ spec:
               mountPath: /opt/app/config.json
               subPath: config.json
             - name: {{ .Release.Name }}
-              mountPath: data.json
+              mountPath: /opt/app/data
             - name: timezone
               mountPath: /etc/localtime
               subPath: Europe/Paris
