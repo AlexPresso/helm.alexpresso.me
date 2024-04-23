@@ -23,7 +23,7 @@ spec:
             path: /usr/share/zoneinfo
       containers:
         - name: application
-          image: ghcr.io/alexpresso/judy-discord-bot:0.24.0
+          image: ghcr.io/alexpresso/judy-discord-bot:0.25.0
           imagePullPolicy: IfNotPresent
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
@@ -33,7 +33,7 @@ spec:
               mountPath: /opt/app/config.json
               subPath: config.json
             - name: {{ .Release.Name }}
-              mountPath: data.json
+              mountPath: /opt/app/data
             - name: timezone
               mountPath: /etc/localtime
               subPath: Europe/Paris
