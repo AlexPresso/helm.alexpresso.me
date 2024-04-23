@@ -23,7 +23,7 @@ spec:
             path: /usr/share/zoneinfo
       containers:
         - name: application
-          image: ghcr.io/alexpresso/judy-discord-bot:0.24.0
+          image: ghcr.io/alexpresso/judy-discord-bot:0.25.0
           imagePullPolicy: IfNotPresent
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
