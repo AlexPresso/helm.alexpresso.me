@@ -14,27 +14,73 @@ config:
 
   webhooks: []
 
-  messages:
-    config_changed: "Un paramètre de configuration a changé !"
-    new_patchnote: "Une nouvelle patchnote a été publiée !"
-    status_changed: "Le statut de l'application a changé."
-    new_day: "C'est l'heure du `!journa` ! (<#808432657838768168>)"
-    item_changed: "Un item a été modifié !"
-    new_item: "Un nouvel item a été ajouté !"
-    item_removed: "Un item a été supprimé"
-    pack_changed: "Un Pack a été modifié !"
-    new_pack: "Un nouveau pack a été ajouté !"
-    pack_removed: "Un pack a été supprimé."
-    new_season: "Une nouvelle saison de l'ascension a démarré !"
-    new_banner: "Une nouvelle bannière a été ajoutée !"
-    banner_changed: "Une bannière a été modifiée !"
-    new_event: "Un nouvel event a débuté !"
-    event_changed: "Un event a été modifié"
-    event_removed: "Un event s'est terminé."
-    new_achievement_category: "Une catégorie de succès a été ajoutée."
-    achievement_category_changed: "Une catégorie de succès a été modifiée."
-    new_achievement: "Un succès a été ajouté."
-    achievement_changed: "Un succès a été modifié."
-    challenge_changed: "Un challenge a été modifié."
-    new_challenge: "Un nouveau challenge a débuté."
-    shop_changed: "De nouveaux objets sont disponibles dans mon [magasin](%s) !"
+  events:
+    config_changed:
+      message: "Un paramètre de configuration a changé !"
+      role: ""
+    new_patchnote:
+      message: "Une nouvelle patchnote a été publiée !"
+      role: ""
+    status_changed:
+      message: "Le statut de l'application a changé."
+      role: ""
+    new_day:
+      message: "C'est l'heure du `!journa` ! (<#808432657838768168>)"
+      role: ""
+    item_changed:
+      message: "Un item a été modifié !"
+      role: ""
+    new_item:
+      message: "Un nouvel item a été ajouté !"
+      role: ""
+    item_removed:
+      message: "Un item a été supprimé"
+      role: ""
+    pack_changed:
+      message: "Un Pack a été modifié !"
+      role: ""
+    new_pack:
+      message: "Un nouveau pack a été ajouté !"
+      role: ""
+    pack_removed:
+      message: "Un pack a été supprimé."
+      role: ""
+    new_season:
+      message: "Une nouvelle saison de l'ascension a démarré !"
+      role: ""
+    new_banner:
+      message: "Une nouvelle bannière a été ajoutée !"
+      role: ""
+    banner_changed:
+      message: "Une bannière a été modifiée !"
+      role: ""
+    new_event:
+      message: "Un nouvel event a débuté !"
+      role: ""
+    event_changed:
+      message: "Un event a été modifié"
+      role: ""
+    event_removed:
+      message: "Un event s'est terminé."
+      role: ""
+    new_achievement_category:
+      message: "Une catégorie de succès a été ajoutée."
+      role: ""
+    achievement_category_changed:
+      message: "Une catégorie de succès a été modifiée."
+      role: ""
+    new_achievement:
+      message: "Un succès a été ajouté."
+      role: ""
+    achievement_changed:
+      message: "Un succès a été modifié."
+      role: ""
+    challenge_changed:
+      message: "Un challenge a été modifié."
+      role: ""
+    new_challenge:
+      message: "Un nouveau challenge a débuté."
+      role: ""
+    shop_changed:
+      message: "De nouveaux objets sont disponibles dans mon [magasin](%s) !"
+      role: ""
