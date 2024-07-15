@@ -12,5 +12,5 @@ data:
         "timeout": 10
       },
       "webhooks": {{ toJson .Values.config.webhooks }},
-      "messages": {{ toJson .Values.config.messages }}
+      "events": {{ toJson .Values.config.events }}
     }
