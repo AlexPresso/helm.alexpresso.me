@@ -9,7 +9,8 @@ data:
       "cdnBaseUrl": "{{ .Values.config.zunivers.cdn_base_url }}",
       "api": {
         "baseurl": "{{ .Values.config.zunivers.api_base_url }}",
-        "timeout": 10
+        "timeout": 10,
+        "rulesettype": "{{ .Values.config.zunivers.ruleset_type }}"
       },
       "webhooks": {{ toJson .Values.config.webhooks }},
       "events": {{ toJson .Values.config.events }}

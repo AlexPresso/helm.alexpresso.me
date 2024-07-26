@@ -11,6 +11,7 @@ config:
     front_base_url: "https://zunivers.zerator.com"
     cdn_base_url: "https://zunivers-cdn.zerator.com/zunivers-prod"
     api_base_url: "https://zunivers-api.zerator.com"
+    ruleset_type: "NORMAL"
 
   webhooks: []
 
