@@ -17,6 +17,7 @@ data:
     zunivers:
       apiBaseUrl: {{ .Values.config.zunivers.apiBaseUrl }}
       frontBaseUrl: {{ .Values.config.zunivers.frontBaseUrl }}
+      gameMode: {{ .Values.config.zunivers.gameMode }}
 
     webhookUrl: ${WEBHOOK_URL}
 
