@@ -28,5 +28,6 @@ config:
   zunivers:
     apiBaseUrl: zunivers-api.zerator.com
     frontBaseUrl: zunivers.zerator.com
+    gameMode: NORMAL
 
   webhookUrl: #insert your own (facultative)
