@@ -12,6 +12,7 @@ data:
         "timeout": 10,
         "rulesettype": "{{ .Values.config.zunivers.ruleset_type }}"
       },
+      "emoji": {{ toJson .Values.config.emojis }},
       "webhooks": {{ toJson .Values.config.webhooks }},
       "events": {{ toJson .Values.config.events }}
     }

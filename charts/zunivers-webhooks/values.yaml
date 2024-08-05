@@ -15,6 +15,12 @@ config:
 
   webhooks: []
 
+  emojis:
+    balance: "<:ZUMonnaie:948286077473546280>"
+    loreDust: "<:Poudrecreatrice:948289012693610546>"
+    loreFragment: "<:Cristaldhistoire:948578144670089216>"
+    heart: "<:zrtL:1090002476536701049>"
+
   events:
     config_changed:
       message: "Un paramètre de configuration a changé !"
