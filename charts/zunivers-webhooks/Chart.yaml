@@ -3,5 +3,5 @@ name: zunivers-webhooks
 description: Discord webhooks dispatcher for the ZUnivers card game (not affiliated)
 type: application
 icon: https://zunivers.zerator.com/img/logo.ac4a9e45.png
-version: 1.14.1
-appVersion: 1.14.0
+version: 1.15.0
+appVersion: 1.15.0
