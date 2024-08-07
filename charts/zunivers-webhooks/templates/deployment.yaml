@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: application
-          image: ghcr.io/alexpresso/zunivers-webhooks:1.15.0
+          image: ghcr.io/alexpresso/zunivers-webhooks:1.17.0
           imagePullPolicy: IfNotPresent
           env:
             - name: "GOPROXY"
