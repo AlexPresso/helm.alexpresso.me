@@ -23,71 +23,98 @@ config:
 
   events:
     config_changed:
+      enabled: true
       message: "Un paramètre de configuration a changé !"
       role: ""
     new_patchnote:
+      enabled: true
       message: "Une nouvelle patchnote a été publiée !"
       role: ""
     status_changed:
+      enabled: true
       message: "Le statut de l'application a changé."
       role: ""
     new_day:
+      enabled: true
       message: "C'est l'heure du `!journa` ! (<#808432657838768168>)"
       role: ""
     item_changed:
+      enabled: true
       message: "Un item a été modifié !"
       role: ""
     new_item:
+      enabled: true
       message: "Un nouvel item a été ajouté !"
       role: ""
     item_removed:
+      enabled: true
       message: "Un item a été supprimé"
       role: ""
     pack_changed:
+      enabled: true
       message: "Un Pack a été modifié !"
       role: ""
     new_pack:
+      enabled: true
       message: "Un nouveau pack a été ajouté !"
       role: ""
     pack_removed:
+      enabled: true
       message: "Un pack a été supprimé."
       role: ""
     new_season:
+      enabled: true
       message: "Une nouvelle saison de l'ascension a démarré !"
       role: ""
     new_banner:
+      enabled: true
       message: "Une nouvelle bannière a été ajoutée !"
       role: ""
     banner_changed:
+      enabled: true
       message: "Une bannière a été modifiée !"
       role: ""
     new_event:
+      enabled: true
       message: "Un nouvel event a débuté !"
       role: ""
     event_changed:
+      enabled: true
       message: "Un event a été modifié"
       role: ""
     event_removed:
+      enabled: true
       message: "Un event s'est terminé."
       role: ""
     new_achievement_category:
+      enabled: true
       message: "Une catégorie de succès a été ajoutée."
       role: ""
     achievement_category_changed:
+      enabled: true
       message: "Une catégorie de succès a été modifiée."
       role: ""
     new_achievement:
+      enabled: true
       message: "Un succès a été ajouté."
       role: ""
     achievement_changed:
+      enabled: true
       message: "Un succès a été modifié."
       role: ""
     challenge_changed:
+      enabled: true
       message: "Un challenge a été modifié."
       role: ""
     new_challenge:
+      enabled: true
       message: "Un nouveau challenge a débuté."
       role: ""
     shop_changed:
+      enabled: true
       message: "De nouveaux objets sont disponibles dans mon [magasin](%s) !"
+      role: ""
+    response_changed:
+      enabled: false
+      message: "Le format de la réponse de `%s` a changé !"
       role: ""
