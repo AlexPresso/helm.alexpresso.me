@@ -639,6 +639,17 @@ entries:
     version: 1.0.0
   zunivers-webhooks:
   - apiVersion: v2
+    appVersion: 1.17.0
+    created: "2024-08-07T22:40:34.832372642Z"
+    description: Discord webhooks dispatcher for the ZUnivers card game (not affiliated)
+    digest: 45df3e35b90797f544fa07329778e86991d2db7c374fb3cac4b3122a97077187
+    icon: https://zunivers.zerator.com/img/logo.ac4a9e45.png
+    name: zunivers-webhooks
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.17.0/zunivers-webhooks-1.17.0.tgz
+    version: 1.17.0
+  - apiVersion: v2
     appVersion: 1.15.0
     created: "2024-08-05T21:24:32.610875847Z"
     description: Discord webhooks dispatcher for the ZUnivers card game (not affiliated)
@@ -803,4 +814,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2024-08-05T21:24:32.611089849Z"
+generated: "2024-08-07T22:40:34.832565292Z"
