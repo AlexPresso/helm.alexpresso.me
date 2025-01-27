@@ -25,7 +25,7 @@ spec:
 
       containers:
         - name: {{ .Release.Name }}
-          image: ghcr.io/pi-hole/pihole
+          image: ghcr.io/pi-hole/pihole:2024.07.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /etc/pihole
@@ -128,7 +128,7 @@ spec:
 
       {{ if .Values.cloudflareDoh.enable }}
         - name: {{ .Release.Name }}-cloudflared
-          image: cloudflare/cloudflared
+          image: cloudflare/cloudflared:2025.1.0
           imagePullPolicy: IfNotPresent
           args:
             - proxy-dns
