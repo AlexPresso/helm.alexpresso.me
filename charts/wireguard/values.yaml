@@ -1,0 +1,30 @@
+volume:
+  annotations: []
+  storage: 50Mi
+  storageClass: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 128Mi
+
+service:
+  enable: true
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  port: 51820
+
+customDns:
+  enable: false
+  ip: 10.43.27.26 #i.e pihole service IP
+
+config:
+  PUID: "1000"
+  PGID: "1000"
+  TZ: "America/Chicago"
+  SERVERPORT: "51820"
+  SERVERURL: "wireguardhost.com"
+  PEERS: "3"
