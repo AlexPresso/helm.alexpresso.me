@@ -4,31 +4,31 @@ metadata:
   name: {{ .Release.Name }}-lists
 data:
   adlists.list: |
-  {{- range .Values.dns.adlist }}
+{{- range .Values.dns.adlist }}
     {{ . }}
-  {{- end }}
+{{- end }}
 
   whitelist.txt: |
-  {{- range .Values.dns.whitelist }}
+{{- range .Values.dns.whitelist }}
     {{ . }}
-  {{- end }}
+{{- end }}
 
   blacklist.txt: |
-  {{- range .Values.dns.blacklist }}
+{{- range .Values.dns.blacklist }}
     {{ . }}
-  {{- end }}
+{{- end }}
 
   pihole-static-dhcp.conf: |
-  {{- range .Values.dhcp.ip.staticIps }}
+{{- range .Values.dhcp.ip.staticIps }}
     dhcp-host={{ . }}
-  {{- end}}
+{{- end}}
 
   custom.list: |
-  {{- range .Values.dns.customDnsEntries.a }}
+{{- range .Values.dns.customDnsEntries.a }}
     {{ . }}
-  {{- end}}
+{{- end}}
 
   05-pihole-custom-cname.conf: |
-  {{- range .Values.dns.customDnsEntries.cname }}
-      {{ . }}
-  {{- end}}
+{{- range .Values.dns.customDnsEntries.cname }}
+    {{ . }}
+{{- end}}

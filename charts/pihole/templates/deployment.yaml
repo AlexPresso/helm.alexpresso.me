@@ -1,5 +1,9 @@
 apiVersion: apps/v1
+{{ if .Values.hostNetwork }}
+kind: DaemonSet
+{{ else }}
 kind: Deployment
+{{ end }}
 metadata:
   name: {{ .Release.Name }}
 spec:
@@ -13,6 +17,10 @@ spec:
     spec:
       {{ if .Values.hostNetwork }}
       hostNetwork: true
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
       {{ end }}
       volumes:
         - name: {{ .Release.Name }}
@@ -25,8 +33,15 @@ spec:
 
       containers:
         - name: {{ .Release.Name }}
-          image: ghcr.io/pi-hole/pihole:2024.07.0
+          image: ghcr.io/pi-hole/pihole:{{ .Values.image.tag }}
           imagePullPolicy: IfNotPresent
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/bash"
+                  - "-c"
+                  - "pihole -g"
           volumeMounts:
             - mountPath: /etc/pihole
               name: {{ .Release.Name }}
@@ -57,6 +72,7 @@ spec:
                 - NET_BIND_SERVICE
                 - NET_RAW
                 - SYS_NICE
+                - SYS_TIME
                 - CHOWN
           ports:
             {{ if .Values.hostNetwork }}
@@ -72,32 +88,34 @@ spec:
               protocol: TCP
             - containerPort: 67
               protocol: UDP
+            - containerPort: 123
+              protocol: UDP
           env:
             - name: TZ
               value: {{ .Values.timezone | quote }}
-            - name: WEB_PORT
+            - name: FTLCONF_webserver_port
               value: "8080"
-            - name: WEBPASSWORD
+            - name: FTLCONF_webserver_api_password
               valueFrom:
                 secretKeyRef:
                   key: webpassword
                   name: {{ .Release.Name }}-secrets
-            - name: PIHOLE_DNS_
+            - name: FTLCONF_dns_upstreams
               {{ if .Values.cloudflareDoh.enable }}
               value: "127.0.0.1#5053"
               {{ else }}
               value: {{ join ";" .Values.dns.servers }}
               {{ end }}
-            - name: CUSTOM_CACHE_SIZE
+            - name: FTLCONF_dns_cache_size
               value: {{ .Values.dns.cacheSize | quote }}
             {{ if .Values.dhcp.enable }}
-            - name: DHCP_ACTIVE
+            - name: FTLCONF_dhcp_active
               value: "true"
-            - name: DHCP_START
+            - name: FTLCONF_dhcp_start
               value: {{ .Values.dhcp.ip.rangeStart | quote }}
-            - name: DHCP_END
+            - name: FTLCONF_dhcp_end
               value: {{ .Values.dhcp.ip.rangeEnd | quote }}
-            - name: DHCP_ROUTER
+            - name: FTLCONF_dhcp_router
               value: {{ .Values.dhcp.ip.router | quote }}
             {{ end }}
           resources:

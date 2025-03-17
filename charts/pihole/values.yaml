@@ -1,7 +1,8 @@
 timezone: "America/Chicago"
 
 hostNetwork: false #Highly recommended if enabling DHCP
-
+image:
+  tag: "2025.03.0"
 webinterface:
   password: #Set your own
   port: 8080 #used as hostPort or servicePort depending on above boolean :)
@@ -12,7 +13,7 @@ webinterface:
 dns:
   adlist:
     - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
-    - https://blocklistproject.github.io/Lists/phishing.txts
+    - https://blocklistproject.github.io/Lists/phishing.txt
     - https://blocklistproject.github.io/Lists/redirect.txt
     - https://www.github.developerdan.com/hosts/lists/ads-and-tracking-extended.txt
     #Prevents local iOS devices from enforcing Apple's DoH :
