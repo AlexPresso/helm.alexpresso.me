@@ -20,6 +20,17 @@ entries:
   judy-discord-bot:
   - apiVersion: v2
     appVersion: 0.25.0
+    created: "2025-03-17T19:42:20.079282403Z"
+    description: A small custom Discord bot with a highly generic code-base made with
+      Discord.js which supports slash-commands, cron-jobs and much more.
+    digest: d4a44c426f8ac645a34655617785cf37af53226496919be14cae530e9342f619
+    name: judy-discord-bot
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/judy-discord-bot-1.0.7/judy-discord-bot-1.0.7.tgz
+    version: 1.0.7
+  - apiVersion: v2
+    appVersion: 0.25.0
     created: "2024-04-23T22:30:58.782004307Z"
     description: A small custom Discord bot with a highly generic code-base made with
       Discord.js which supports slash-commands, cron-jobs and much more.
@@ -402,6 +413,21 @@ entries:
   zunivers-ninja:
   - apiVersion: v2
     appVersion: 1.31.0
+    created: "2025-03-17T19:42:20.178266492Z"
+    dependencies:
+    - alias: database
+      name: neo4j
+      repository: https://helm.neo4j.com/neo4j
+      version: 5.18.1
+    description: Automated advice tool for the ZUnivers card game (not affiliated)
+    digest: 0e4fefb3a272c298611cd097420041a4ef2cc99cc4b171263d942370af6264be
+    name: zunivers-ninja
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-ninja-1.31.1/zunivers-ninja-1.31.1.tgz
+    version: 1.31.1
+  - apiVersion: v2
+    appVersion: 1.31.0
     created: "2025-01-28T19:21:11.388010984Z"
     dependencies:
     - alias: database
@@ -733,6 +759,17 @@ entries:
   zunivers-webhooks:
   - apiVersion: v2
     appVersion: 1.21.0
+    created: "2025-03-17T19:42:20.290351407Z"
+    description: Discord webhooks dispatcher for the ZUnivers card game (not affiliated)
+    digest: 5a9b975e7efed427c215f2804e0ab2dace2ce26b95aa69bef92dc46db064ba71
+    icon: https://zunivers.zerator.com/img/logo.ac4a9e45.png
+    name: zunivers-webhooks
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.21.1/zunivers-webhooks-1.21.1.tgz
+    version: 1.21.1
+  - apiVersion: v2
+    appVersion: 1.21.0
     created: "2025-01-27T23:25:11.922532944Z"
     description: Discord webhooks dispatcher for the ZUnivers card game (not affiliated)
     digest: ccfb3d2bbc36bd275f80acf948eda61f065c2fde843dda5f2fb436faf45d1758
@@ -929,4 +966,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2025-01-28T19:21:11.388310211Z"
+generated: "2025-03-17T19:42:20.290748367Z"
