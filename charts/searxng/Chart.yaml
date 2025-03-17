@@ -3,7 +3,7 @@ description: Installs SearxNG in kubernetes
 home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/searxng
 name: SearxNG
 appVersion: "latest"
-version: 0.0.1
+version: 0.0.2
 sources:
   - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/searxng
   - https://github.com/searxng/searxng
