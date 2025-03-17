@@ -35,13 +35,6 @@ spec:
         - name: {{ .Release.Name }}
           image: ghcr.io/pi-hole/pihole:{{ .Values.image.tag }}
           imagePullPolicy: IfNotPresent
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - "/bin/bash"
-                  - "-c"
-                  - "pihole -g"
           volumeMounts:
             - mountPath: /etc/pihole
               name: {{ .Release.Name }}
@@ -93,6 +86,8 @@ spec:
           env:
             - name: TZ
               value: {{ .Values.timezone | quote }}
+            - name: FTLCONF_misc_etc_dnsmasq_d
+              value: "true"
             - name: FTLCONF_webserver_port
               value: "8080"
             - name: FTLCONF_webserver_api_password
@@ -108,6 +103,8 @@ spec:
               {{ end }}
             - name: FTLCONF_dns_cache_size
               value: {{ .Values.dns.cacheSize | quote }}
+            - name: FTLCONF_dns_dnssec
+              value: {{ .Values.dns.dnsSec | quote }}
             {{ if .Values.dhcp.enable }}
             - name: FTLCONF_dhcp_active
               value: "true"
@@ -129,9 +126,9 @@ spec:
               port: 8080
               {{ end }}
               path: &probe-uri /admin
-            initialDelaySeconds: 20
+            initialDelaySeconds: 60
             periodSeconds: 20
-            failureThreshold: 2
+            failureThreshold: 4
           readinessProbe:
             httpGet:
               {{ if .Values.hostNetwork }}
@@ -140,13 +137,13 @@ spec:
               port: 8080
               {{ end }}
               path: *probe-uri
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 20
             failureThreshold: 4
 
       {{ if .Values.cloudflareDoh.enable }}
         - name: {{ .Release.Name }}-cloudflared
-          image: cloudflare/cloudflared:2025.1.0
+          image: cloudflare/cloudflared:{{ .Values.cloudflareDoh.image.tag }}
           imagePullPolicy: IfNotPresent
           args:
             - proxy-dns

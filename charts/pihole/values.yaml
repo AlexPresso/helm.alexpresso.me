@@ -23,7 +23,14 @@ dns:
   blacklist: []
 
   cacheSize: 10000
-  dnsSec: true #Requires cacheSize >= 100
+
+  # DNSSEC
+  # - Requires cacheSize >= 100
+  # - Can cause issues on custom local domains if not using pihole as DHCP
+  # - No value to enable if using CloudFlare DOH (config bellow) :
+  #   - "DNSSEC" is inherent of DoH
+  #   - No one is going to alter DNS replies between the containers inside your pod...
+  dnsSec: "true"
 
   customDnsEntries:
     cname: []
@@ -83,6 +90,8 @@ ingress:
 
 cloudflareDoh:
   enable: true
+  image:
+    tag: "2025.2.1"
   upstreams:
     - https://1.1.1.1/dns-query
     - https://1.0.0.1/dns-query
