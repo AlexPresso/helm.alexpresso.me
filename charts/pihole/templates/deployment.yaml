@@ -102,7 +102,7 @@ spec:
                   name: {{ .Release.Name }}-secrets
             - name: FTLCONF_dns_upstreams
               {{ if .Values.cloudflareDoh.enable }}
-              value: "127.0.0.1#5053"
+              value: "127.0.0.1#5053;::1#5053"
               {{ else }}
               value: {{ join ";" .Values.dns.servers }}
               {{ end }}
