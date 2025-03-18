@@ -10,6 +10,12 @@ spec:
   selector:
     matchLabels:
       name: {{ .Release.Name }}
+  {{ if .Values.hostNetwork }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  {{ end }}
   template:
     metadata:
       labels:
@@ -17,10 +23,6 @@ spec:
     spec:
       {{ if .Values.hostNetwork }}
       hostNetwork: true
-      updateStrategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 1
       {{ end }}
       volumes:
         - name: {{ .Release.Name }}
@@ -47,17 +49,6 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
-            - mountPath: /etc/pihole/custom.list #Custom DNS A entries
-              name: {{ .Release.Name }}-lists
-              subPath: custom.list
-            {{ if .Values.dhcp.enable }}
-            - mountPath: /etc/dnsmasq.d/04-pihole-static-dhcp.conf
-              name: {{ .Release.Name }}-lists
-              subPath: pihole-static-dhcp.conf
-            {{ end }}
-            - mountPath: /etc/dnsmasq.d/05-pihole-custom-cname.conf
-              name: {{ .Release.Name }}-lists
-              subPath: 05-pihole-custom-cname.conf
           securityContext:
             capabilities:
               add:
@@ -84,10 +75,6 @@ spec:
             - containerPort: 123
               protocol: UDP
           env:
-            - name: TZ
-              value: {{ .Values.timezone | quote }}
-            - name: FTLCONF_misc_etc_dnsmasq_d
-              value: "true"
             - name: FTLCONF_webserver_port
               value: "8080"
             - name: FTLCONF_webserver_api_password
@@ -105,6 +92,10 @@ spec:
               value: {{ .Values.dns.cacheSize | quote }}
             - name: FTLCONF_dns_dnssec
               value: {{ .Values.dns.dnsSec | quote }}
+            - name: FTLCONF_dns_hosts
+              value: {{ join ";" .Values.dns.customDnsEntries.a | quote }}
+            - name: FTLCONF_dns_cnameRecords
+              value: {{ join ";" .Values.dns.customDnsEntries.cname | quote }}
             {{ if .Values.dhcp.enable }}
             - name: FTLCONF_dhcp_active
               value: "true"
@@ -114,6 +105,12 @@ spec:
               value: {{ .Values.dhcp.ip.rangeEnd | quote }}
             - name: FTLCONF_dhcp_router
               value: {{ .Values.dhcp.ip.router | quote }}
+            - name: FTLCONF_dhcp_hosts
+              value: {{ join ";" .Values.dhcp.ip.staticIps | quote }}
+            {{ end }}
+            {{ if .Values.ntp.enable }}
+            - name: FTLCONF_ntp_sync_server
+              value: {{ .Values.ntp.syncServer }}
             {{ end }}
           resources:
 {{- toYaml .Values.resources | nindent 12 }}

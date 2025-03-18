@@ -65,6 +65,14 @@ dhcp:
     type: LoadBalancer
     port: 67
 
+ntp:
+  enable: true
+  syncServer: pool.ntp.org
+  service:
+    enable: true
+    type: LoadBalancer
+    port: 123
+
 resources:
   requests:
     cpu: 200m

@@ -30,7 +30,7 @@ metadata:
   name: {{ .Release.Name }}-svc-dhcp
   namespace: {{ .Release.Namespace }}
 spec:
-  {{ if or (eq .Values.webinterface.service.type "LoadBalancer") (eq .Values.webinterface.service.type "NodePort") }}
+  {{ if or (eq .Values.dhcp.service.type "LoadBalancer") (eq .Values.dhcp.service.type "NodePort") }}
   externalTrafficPolicy: Local
   {{ end }}
   type: {{ .Values.dhcp.service.type }}
@@ -54,7 +54,7 @@ metadata:
   name: {{ .Release.Name }}-svc-dns
   namespace: {{ .Release.Namespace }}
 spec:
-  {{ if or (eq .Values.webinterface.service.type "LoadBalancer") (eq .Values.webinterface.service.type "NodePort") }}
+  {{ if or (eq .Values.dns.service.type "LoadBalancer") (eq .Values.dns.service.type "NodePort") }}
   externalTrafficPolicy: Local
   {{ end }}
   type: {{ .Values.dns.service.type }}
@@ -67,6 +67,34 @@ spec:
       protocol: TCP
       targetPort: 53
       name: dns-tcp
+  selector:
+    name: {{ .Release.Name }}
+
+{{ end }}
+
+{{ if .Values.ntp.service.enable }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-ntp
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{ if or (eq .Values.ntp.service.type "LoadBalancer") (eq .Values.ntp.service.type "NodePort") }}
+  externalTrafficPolicy: Local
+  {{ end }}
+  type: {{ .Values.ntp.service.type }}
+  ports:
+    - port: {{ .Values.ntp.service.port }}
+      protocol: UDP
+      targetPort: 456
+      name: ntp-udp
+    - port: {{ .Values.ntp.service.port }}
+      protocol: TCP
+      targetPort: 456
+      name: ntp-tcp
   selector:
     name: {{ .Release.Name }}
 
