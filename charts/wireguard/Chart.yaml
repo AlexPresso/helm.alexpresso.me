@@ -1,0 +1,12 @@
+apiVersion: v1
+description: Installs Wireguard in Kubernetes
+home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/wireguard
+name: Wireguard
+appVersion: "latest"
+version: 0.0.1
+sources:
+  - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/wireguard
+  - https://www.wireguard.com/
+icon: https://www.wireguard.com/img/wireguard.svg
+maintainers:
+  - name: AlexPresso

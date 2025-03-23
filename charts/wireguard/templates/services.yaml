@@ -1,0 +1,23 @@
+{{- if .Values.service.enable }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc-vpn
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- if or (eq "NodePort" .Values.service.type) (eq "LoadBalancer" .Values.service.type) }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  {{- end }}
+
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      name: wireguard-vpn
+      protocol: UDP
+      targetPort: 51820
+
+  selector:
+    name: {{ .Release.Name }}
+
+{{- end }}
