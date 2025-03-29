@@ -2,7 +2,8 @@ apiVersion: v2
 name: zunivers-ninja
 description: Automated advice tool for the ZUnivers card game (not affiliated)
 type: application
-version: 1.31.1
+icon: https://repository-images.githubusercontent.com/420819440/51db7016-b325-4d1b-a1d3-ce82d771f58b
+version: 1.31.2
 appVersion: 1.31.0
 dependencies:
   - name: neo4j
