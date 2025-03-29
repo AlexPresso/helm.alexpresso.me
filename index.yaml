@@ -503,6 +503,22 @@ entries:
   zunivers-ninja:
   - apiVersion: v2
     appVersion: 1.31.0
+    created: "2025-03-29T20:19:28.970051838Z"
+    dependencies:
+    - alias: database
+      name: neo4j
+      repository: https://helm.neo4j.com/neo4j
+      version: 5.18.1
+    description: Automated advice tool for the ZUnivers card game (not affiliated)
+    digest: 93ccaab58d8443553634a9b97569269d923622d5c83ed1b11ed606cef33713f3
+    icon: https://repository-images.githubusercontent.com/420819440/51db7016-b325-4d1b-a1d3-ce82d771f58b
+    name: zunivers-ninja
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-ninja-1.31.2/zunivers-ninja-1.31.2.tgz
+    version: 1.31.2
+  - apiVersion: v2
+    appVersion: 1.31.0
     created: "2025-03-17T19:42:20.178266492Z"
     dependencies:
     - alias: database
@@ -849,6 +865,17 @@ entries:
   zunivers-webhooks:
   - apiVersion: v2
     appVersion: 1.21.0
+    created: "2025-03-29T20:19:29.136254516Z"
+    description: Discord webhooks dispatcher for the ZUnivers card game (not affiliated)
+    digest: 4edde7361d63f5385ab6256af26d9acf8cfa279e259860466223171a02c88a1f
+    icon: https://zunivers.zerator.com/assets/logo-mini.png
+    name: zunivers-webhooks
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.21.2/zunivers-webhooks-1.21.2.tgz
+    version: 1.21.2
+  - apiVersion: v2
+    appVersion: 1.21.0
     created: "2025-03-17T19:42:20.290351407Z"
     description: Discord webhooks dispatcher for the ZUnivers card game (not affiliated)
     digest: 5a9b975e7efed427c215f2804e0ab2dace2ce26b95aa69bef92dc46db064ba71
@@ -1056,4 +1083,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2025-03-29T20:03:03.541650747Z"
+generated: "2025-03-29T20:19:29.136628532Z"
