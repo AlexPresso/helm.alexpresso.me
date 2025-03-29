@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc
+spec:
+  {{ if or (eq .Values.wireguard.service.type "LoadBalancer") (eq .Values.wireguard.service.type "NodePort") }}
+  externalTrafficPolicy: Local
+  {{ end }}
+  type: {{ .Values.wireguard.service.type }}
+  ports:
+    - port: {{ .Values.wireguard.service.port }}
+      targetPort: 51820
+      protocol: UDP
+      {{ if .Values.wireguard.service.nodePort }}
+      nodePort: {{ .Values.wireguard.service.nodePort }}
+      {{ end }}
+  {{- if .Values.wireguard.service.externalIPs }}
+  externalIPs:
+    {{- toYaml .Values.wireguard.service.externalIPs | nindent 4 }}
+  {{- end }}
+  selector:
+    name: {{ .Release.Name }}

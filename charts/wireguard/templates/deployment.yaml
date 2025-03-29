@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+{{ if .Values.hostNetwork }}
+kind: DaemonSet
+{{ else }}
+kind: Deployment
+{{ end }}
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: wireguard
+spec:
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}
+  {{ if .Values.hostNetwork }}
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  {{ end }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Release.Name }}
+    spec:
+      {{ if .Values.hostNetwork }}
+      hostNetwork: {{ .Values.hostNetwork }}
+      {{ end }}
+      initContainers:
+        - name: "wireguard-config-template"
+          image: "busybox"
+          command: [ "sh", "-c", "ENI=$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print $5}'); sed \"s/ENI/$ENI/g\" /etc/wireguard-template/wg0.conf.template > /etc/wireguard/wg0.conf; chmod 400 /etc/wireguard/wg0.conf" ]
+          volumeMounts:
+            - name: config
+              mountPath: /etc/wireguard/
+            - name: config-template
+              mountPath: /etc/wireguard-template/
+      containers:
+        - name: wireguard
+          image: linuxserver/wireguard:{{ .Values.wireguard.image.tag }}
+          imagePullPolicy: {{ .Values.wireguard.image.pullPolicy }}
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "UTC"
+            - name: PEERS
+              value: "force_server"
+          livenessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - 'ip link show dev wg0 | grep -s up'
+          readinessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - 'ip link show dev wg0 | grep -s up'
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          ports:
+            - containerPort: 51820
+              protocol: UDP
+          volumeMounts:
+            - name: config
+              mountPath: /etc/wireguard/
+              readOnly: true
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc
+        - name: config-template
+          secret:
+            secretName: {{ .Release.Name }}-config

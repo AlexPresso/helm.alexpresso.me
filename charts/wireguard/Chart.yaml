@@ -1,0 +1,11 @@
+apiVersion: v2
+name: wireguard
+version: 0.1.0
+description: A Helm chart for deploying WireGuard in K8S
+type: application
+icon: view-source:https://www.wireguard.com/img/icons/favicon-256.png
+maintainers:
+  - name: AlexPresso
+sources:
+  - https://github.com/linuxserver/docker-wireguard
+  - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/wireguard
