@@ -1,0 +1,32 @@
+hostNetwork: false
+wireguard:
+  image:
+    tag: latest
+    pullPolicy: IfNotPresent
+  service:
+    type: NodePort
+    port: 31820
+    nodePort: 31820
+#    externalIPs: []
+  persistence:
+    enabled: true
+    storageClass: "local-path"
+    size: 1Gi
+  peers:
+    - name: device1
+      allowedIPs: "10.6.0.2/32"
+      presharedKey: "YOUR_PRESHARED_KEY"
+      publicKey: ""
+      keepAlive: 25
+#    - name: device2
+#      allowedIPs: "10.6.0.3/32"
+#      presharedKey: "YOUR_PRESHARED_KEY"
+#      publicKey: ""
+  config:
+    privateKey: "YOUR_WIREGUARD_PRIVATE_KEY"
+    listenPort: 51820
+    address: "10.6.0.1/24"
+    dns: ""  # Leave empty to use system default
+    mtu: 1420
+  ingress:
+    enabled: false
