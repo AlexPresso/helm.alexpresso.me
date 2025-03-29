@@ -89,11 +89,11 @@ spec:
   ports:
     - port: {{ .Values.ntp.service.port }}
       protocol: UDP
-      targetPort: 456
+      targetPort: 123
       name: ntp-udp
     - port: {{ .Values.ntp.service.port }}
       protocol: TCP
-      targetPort: 456
+      targetPort: 123
       name: ntp-tcp
   selector:
     name: {{ .Release.Name }}
