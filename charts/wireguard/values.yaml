@@ -28,5 +28,38 @@ wireguard:
     address: "10.6.0.1/24"
     dns: ""  # Leave empty to use system default
     mtu: 1420
+    disableTable: false
+
+    # You can add custom postUpd commands using this additionalPostUp (ENI is automatically replaced by container eth0 generated name on startup)
+    additionalPostUp: []
+#      # Firewall example to only allow VPN clients to access 192.168.1.107 on ports 53,80,443
+#
+#      # Block all FORWARD traffic
+#      - iptables -F FORWARD
+#      - iptables -P FORWARD DROP
+#      # Enable MASQUERADE
+#      - iptables -t nat -I POSTROUTING -o ENI -j MASQUERADE -s 10.6.0.0/24
+#      # Create new Chain named WG_wg0 and add to FORWARD chain
+#      - iptables -N WG_wg0
+#      - iptables -A FORWARD -j WG_wg0
+#      # Do not break active connections
+#      - iptables -A WG_wg0 -o wg0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+#      # Accept traffic from WG clients (within WG net) ; only going to 192.168.1.107:(53,80,443)
+#      - iptables -A WG_wg0 -s 10.6.0.0/24 -i wg0 -d 192.168.1.107 -p udp -m multiport --dports 53,80,443 -j ACCEPT
+#      - iptables -A WG_wg0 -s 10.6.0.0/24 -i wg0 -d 192.168.1.107 -p tcp -m multiport --dports 53,80,443 -j ACCEP
+#      # Drop everything else
+#      - iptables -A WG_wg0 -i wg0 -j DROP
+#      # Return to FORWARD Chain
+#      - iptables -A WG_wg0 -j RETURN
+
+
+    # You can add custom ip routes using this additionalPostUp (ENI is automatically replaced by container eth0 generated name on startup)
+    additionalPostDown: []
+#      # PostDown of the above example configuration
+#
+#      - iptables -t nat -D POSTROUTING -o ENI -j MASQUERADE -s 10.6.0.0/24
+#      - iptables -D FORWARD -j WG_wg0
+#      - iptables -F WG_wg0
+#      - iptables -X WG_wg0
   ingress:
     enabled: false

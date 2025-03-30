@@ -29,7 +29,7 @@ spec:
       initContainers:
         - name: "wireguard-config-template"
           image: "busybox"
-          command: [ "sh", "-c", "ENI=$(ip route get 8.8.8.8 | grep 8.8.8.8 | awk '{print $5}'); sed \"s/ENI/$ENI/g\" /etc/wireguard-template/wg0.conf.template > /etc/wireguard/wg0.conf; chmod 400 /etc/wireguard/wg0.conf" ]
+          command: [ "sh", "-c", "ENI=$(ip route get 1.1.1.1 | grep 1.1.1.1 | awk '{print $5}'); sed \"s/ENI/$ENI/g\" /etc/wireguard-template/wg0.conf.template > /etc/wireguard/wg0.conf; chmod 400 /etc/wireguard/wg0.conf" ]
           volumeMounts:
             - name: config
               mountPath: /etc/wireguard/
@@ -68,7 +68,6 @@ spec:
             capabilities:
               add:
                 - NET_ADMIN
-                - SYS_MODULE
           ports:
             - containerPort: 51820
               protocol: UDP
