@@ -65,7 +65,6 @@ spec:
                 - -c
                 - 'ip link show dev wg0 | grep -s up'
           securityContext:
-            privileged: true
             capabilities:
               add:
                 - NET_ADMIN
