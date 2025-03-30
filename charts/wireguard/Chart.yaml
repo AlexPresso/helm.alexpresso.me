@@ -1,6 +1,6 @@
 apiVersion: v2
 name: wireguard
-version: 0.1.0
+version: 0.1.1
 description: A Helm chart for deploying WireGuard in K8S
 type: application
 icon: https://www.wireguard.com/img/icons/favicon-256.png
