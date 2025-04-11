@@ -124,8 +124,8 @@ spec:
               {{ end }}
               path: &probe-uri /admin
             initialDelaySeconds: 60
-            periodSeconds: 20
-            failureThreshold: 4
+            periodSeconds: 25
+            failureThreshold: 5
           readinessProbe:
             httpGet:
               {{ if .Values.hostNetwork }}
@@ -135,8 +135,8 @@ spec:
               {{ end }}
               path: *probe-uri
             initialDelaySeconds: 60
-            periodSeconds: 20
-            failureThreshold: 4
+            periodSeconds: 25
+            failureThreshold: 5
 
       {{ if .Values.cloudflareDoh.enable }}
         - name: {{ .Release.Name }}-cloudflared

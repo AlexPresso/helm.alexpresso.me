@@ -1,9 +1,10 @@
-apiVersion: v1
+apiVersion: v2
 description: Installs pihole in kubernetes
+type: application
 home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
 name: pihole
-appVersion: "2025.03.0"
-version: 1.2.9
+appVersion: "2025.04.0"
+version: 1.2.10
 sources:
   - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
   - https://pi-hole.net/
