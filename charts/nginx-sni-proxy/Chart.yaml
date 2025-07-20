@@ -1,10 +1,10 @@
 apiVersion: v2
-description: Installs pihole in kubernetes
+description: Installs an NGinX SNI Proxy in kubernetes
 type: application
 home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/nginx-sni-proxy
 name: nginx-sni-proxy
 appVersion: "latest"
-version: 1.0.0
+version: 1.0.1
 sources:
   - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/nginx-sni-proxy
   - https://nginx.org/
