@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Release.Name }}
+    spec:
+      volumes:
+        - name: {{ .Release.Name }}-config
+          configMap:
+            name: {{ .Release.Name }}-config
+
+      containers:
+        - name: {{ .Release.Name }}
+          image: nginx:{{ .Values.nginx.image.tag }}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: {{ .Release.Name }}-config
+              mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+          ports:
+            - containerPort: 80
+              protocol: TCP
+            - containerPort: 80
+              protocol: UDP
+            - containerPort: 443
+              protocol: TCP
+            - containerPort: 443
+              protocol: UDP
+          resources:
+{{- toYaml .Values.nginx.resources | nindent 12 }}
+
+          livenessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3

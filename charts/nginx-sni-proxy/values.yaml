@@ -1,0 +1,22 @@
+nginx:
+  image:
+    tag: "latest"
+
+  resources:
+    requests:
+      memory: 1Gi
+    limits:
+      memory: 1Gi
+
+  service:
+    externalIPs:
+      - 192.168.1.108
+      - fd12:caf3:babe::1
+
+  config:
+    dns:
+      allowIPv6: true
+      servers:
+        - 1.0.0.1
+        - 1.1.1.1
+      cache: 10s

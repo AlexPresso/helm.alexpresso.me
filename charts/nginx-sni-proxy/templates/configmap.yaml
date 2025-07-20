@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+data:
+  nginx.conf: |
+    worker_processes auto;
+
+    events {
+      worker_connections 1024;
+    }
+
+    stream {
+      # Enable SNI extraction from TLS ClientHello
+      ssl_preread on;
+
+      resolver {{ join " " .Values.nginx.config.dns.servers }} {{ if not .Values.nginx.config.dns.allowIPv6 }} ipv6=off{{ end }} valid={{ .Values.nginx.config.dns.cache }};
+
+      log_format basic '[$time_local] $remote_addr -> $ssl_preread_server_name:$server_port '
+                       'proto=$protocol bytes_sent=$bytes_sent bytes_received=$bytes_received duration=${session_time}s';
+
+      server {
+        listen 443;
+        proxy_pass $ssl_preread_server_name:443;
+        access_log /dev/stdout basic;
+      }
+    }
+
+    http {
+      resolver {{ join " " .Values.nginx.config.dns.servers }} {{ if not .Values.nginx.config.dns.allowIPv6 }} ipv6=off{{ end }} valid={{ .Values.nginx.config.dns.cache }};
+
+      log_format basic '[$time_local] $remote_addr -> $host:$server_port '
+                       'proto=$server_protocol bytes_sent=$bytes_sent bytes_received=$request_length duration=${request_time}s';
+
+      server {
+        listen 80;
+        access_log /dev/stdout basic;
+
+        location / {
+          proxy_pass http://$host;
+        }
+      }
+    }
