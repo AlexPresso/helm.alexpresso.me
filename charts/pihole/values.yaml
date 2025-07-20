@@ -2,7 +2,7 @@ timezone: "America/Chicago"
 
 hostNetwork: false #Highly recommended if enabling DHCP
 image:
-  tag: "2025.04.0"
+  tag: "2025.07.1"
 webinterface:
   password: #Set your own
   port: 8080 #used as hostPort or servicePort depending on above boolean :)
@@ -21,6 +21,7 @@ dns:
     - https://raw.githubusercontent.com/dibdot/DoH-IP-blocklists/master/doh-domains.txt
   whitelist: []
   blacklist: []
+  additionalDnsmasq: []
 
   cacheSize: 10000
 

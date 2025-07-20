@@ -3,8 +3,8 @@ description: Installs pihole in kubernetes
 type: application
 home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
 name: pihole
-appVersion: "2025.04.0"
-version: 1.2.10
+appVersion: "2025.07.1"
+version: 1.2.11
 sources:
   - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
   - https://pi-hole.net/

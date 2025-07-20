@@ -17,3 +17,8 @@ data:
 {{- range .Values.dns.blacklist }}
     {{ . }}
 {{- end }}
+
+  1-additional.conf: |
+{{- range .Values.dns.additionalDnsmasq }}
+    {{ . }}
+{{- end }}

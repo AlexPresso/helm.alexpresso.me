@@ -49,6 +49,9 @@ spec:
             - mountPath: /etc/pihole/blacklist.txt
               name: {{ .Release.Name }}-lists
               subPath: blacklist.txt
+            - mountPath: /etc/dnsmasq.d/1-additional.conf
+              name: {{ .Release.Name }}-lists
+              subPath: 1-additional.conf
           securityContext:
             capabilities:
               add:
@@ -96,6 +99,10 @@ spec:
               value: {{ join ";" .Values.dns.customDnsEntries.a | quote }}
             - name: FTLCONF_dns_cnameRecords
               value: {{ join ";" .Values.dns.customDnsEntries.cname | quote }}
+            {{ if gt (len .Values.dns.additionalDnsmasq) 0 }}
+            - name: FTLCONF_misc_etc_dnsmasq_d
+              value: "true"
+            {{ end }}
             {{ if .Values.dhcp.enable }}
             - name: FTLCONF_dhcp_active
               value: "true"
@@ -123,8 +130,8 @@ spec:
               port: 8080
               {{ end }}
               path: &probe-uri /admin
-            initialDelaySeconds: 60
-            periodSeconds: 25
+            initialDelaySeconds: 10
+            periodSeconds: 10
             failureThreshold: 5
           readinessProbe:
             httpGet:
@@ -134,8 +141,8 @@ spec:
               port: 8080
               {{ end }}
               path: *probe-uri
-            initialDelaySeconds: 60
-            periodSeconds: 25
+            initialDelaySeconds: 10
+            periodSeconds: 10
             failureThreshold: 5
 
       {{ if .Values.cloudflareDoh.enable }}
