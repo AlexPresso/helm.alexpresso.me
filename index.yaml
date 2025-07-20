@@ -106,6 +106,25 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/judy-discord-bot-1.0.0/judy-discord-bot-1.0.0.tgz
     version: 1.0.0
+  nginx-sni-proxy:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-07-20T23:20:17.512429805Z"
+    description: Installs pihole in kubernetes
+    digest: 2889440b739491298edd56d39103170fb3e53ec905f474c0891a5e21b92c8519
+    home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/nginx-sni-proxy
+    icon: https://nginx.org/img/nginx_logo_dark.png
+    maintainers:
+    - name: AlexPresso
+    name: nginx-sni-proxy
+    sources:
+    - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/nginx-sni-proxy
+    - https://nginx.org/
+    - https://hub.docker.com/_/nginx
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/nginx-sni-proxy-1.0.0/nginx-sni-proxy-1.0.0.tgz
+    version: 1.0.0
   pihole:
   - apiVersion: v2
     appVersion: 2025.07.1
@@ -1170,4 +1189,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2025-07-20T20:51:24.252321798Z"
+generated: "2025-07-20T23:20:17.512716125Z"
