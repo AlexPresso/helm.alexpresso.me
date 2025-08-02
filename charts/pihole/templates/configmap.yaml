@@ -8,17 +8,68 @@ data:
     {{ . }}
 {{- end }}
 
-  whitelist.txt: |
-{{- range .Values.dns.whitelist }}
-    {{ . }}
-{{- end }}
-
-  blacklist.txt: |
-{{- range .Values.dns.blacklist }}
-    {{ . }}
-{{- end }}
-
   1-additional.conf: |
 {{- range .Values.dns.additionalDnsmasq }}
     {{ . }}
 {{- end }}
+
+  domainlists.sh: |
+    #!/bin/bash
+
+    echo "[postStart] Waiting for Pi-hole FTL to be ready..."
+    timeout=60
+    while true; do
+      if dig @127.0.0.1 pi.hole +short | grep -q '.'; then
+        echo "[postStart] Pi-hole DNS is ready."
+        break
+      fi
+
+      sleep 2
+
+      timeout=$((timeout - 2))
+      if [ $timeout -le 0 ]; then
+        echo "[postStart] Timeout: Pi-hole did not become ready in time."
+        exit 1
+      fi
+    done
+
+    {{- if or
+        (.Values.dns.domainlists.exactAllowlist | default (list))
+        (.Values.dns.domainlists.exactDenylist | default (list))
+        (.Values.dns.domainlists.regexAllowlist | default (list))
+        (.Values.dns.domainlists.regexDenylist | default (list))
+    }}
+
+    echo "[postStart] Inserting domain rules into gravity.db..."
+
+    {{- $now := now | unixEpoch }}
+    pihole-FTL sqlite3 /etc/pihole/gravity.db <<SQL
+    {{- range .Values.dns.domainlists.exactAllowlist | default (list) }}
+    INSERT OR IGNORE INTO domainlist (type, domain, enabled, date_added, date_modified, comment)
+    VALUES (0, '{{ . }}', 1, {{ $now }}, {{ $now }}, 'helm-init');
+    {{- end }}
+
+    {{- range .Values.dns.domainlists.exactDenylist | default (list) }}
+    INSERT OR IGNORE INTO domainlist (type, domain, enabled, date_added, date_modified, comment)
+    VALUES (1, '{{ . }}', 1, {{ $now }}, {{ $now }}, 'helm-init');
+    {{- end }}
+
+    {{- range .Values.dns.domainlists.regexAllowlist | default (list) }}
+    INSERT OR IGNORE INTO domainlist (type, domain, enabled, date_added, date_modified, comment)
+    VALUES (2, '{{ . }}', 1, {{ $now }}, {{ $now }}, 'helm-init');
+    {{- end }}
+
+    {{- range .Values.dns.domainlists.regexDenylist | default (list) }}
+    INSERT OR IGNORE INTO domainlist (type, domain, enabled, date_added, date_modified, comment)
+    VALUES (3, '{{ . }}', 1, {{ $now }}, {{ $now }}, 'helm-init');
+    {{- end }}
+    SQL
+
+    echo "[postStart] Reloading Pi-hole DNS..."
+    pihole restartdns reload-lists
+
+    {{- else }}
+    echo "[postStart] No domainlists configured, skipping SQL import."
+    {{- end }}
+
+    echo "[postStart] Done."

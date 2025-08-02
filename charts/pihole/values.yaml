@@ -19,8 +19,11 @@ dns:
     #Prevents local iOS devices from enforcing Apple's DoH :
     - https://raw.githubusercontent.com/oneoffdallas/dohservers/master/list.txt
     - https://raw.githubusercontent.com/dibdot/DoH-IP-blocklists/master/doh-domains.txt
-  whitelist: []
-  blacklist: []
+  domainlists:
+    exactAllowlist: []
+    exactDenylist: []
+    regexAllowlist: []
+    regexDenylist: []
   additionalDnsmasq: []
 
   cacheSize: 10000

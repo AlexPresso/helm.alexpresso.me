@@ -31,7 +31,7 @@ spec:
         - name: {{ .Release.Name }}-lists
           configMap:
             name: {{ .Release.Name }}-lists
-            defaultMode: 420
+            defaultMode: 0755
 
       containers:
         - name: {{ .Release.Name }}
@@ -43,15 +43,12 @@ spec:
             - mountPath: /etc/pihole/adlists.list
               name: {{ .Release.Name }}-lists
               subPath: adlists.list
-            - mountPath: /etc/pihole/whitelist.txt
-              name: {{ .Release.Name }}-lists
-              subPath: whitelist.txt
-            - mountPath: /etc/pihole/blacklist.txt
-              name: {{ .Release.Name }}-lists
-              subPath: blacklist.txt
             - mountPath: /etc/dnsmasq.d/1-additional.conf
               name: {{ .Release.Name }}-lists
               subPath: 1-additional.conf
+            - mountPath: /tmp/domainlists.sh
+              name: {{ .Release.Name }}-lists
+              subPath: domainlists.sh
           securityContext:
             capabilities:
               add:
@@ -61,6 +58,13 @@ spec:
                 - SYS_NICE
                 - SYS_TIME
                 - CHOWN
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - "/tmp/domainlists.sh"
           ports:
             {{ if .Values.hostNetwork }}
             - containerPort: {{ .Values.webinterface.port }}
