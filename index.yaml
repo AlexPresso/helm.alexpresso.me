@@ -146,6 +146,25 @@ entries:
   pihole:
   - apiVersion: v2
     appVersion: 2025.07.1
+    created: "2025-08-02T20:47:02.871662677Z"
+    description: Installs pihole in kubernetes
+    digest: f247a57208da8a8c94cacd00916a5a304d2b05271997336b965f26e9a815c6b3
+    home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
+    icon: https://wp-cdn.pi-hole.net/wp-content/uploads/2016/12/Vortex-R.png
+    maintainers:
+    - name: AlexPresso
+    name: pihole
+    sources:
+    - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/pihole
+    - https://pi-hole.net/
+    - https://github.com/pi-hole
+    - https://github.com/pi-hole/docker-pi-hole
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/pihole-1.2.13/pihole-1.2.13.tgz
+    version: 1.2.13
+  - apiVersion: v2
+    appVersion: 2025.07.1
     created: "2025-07-20T20:51:24.252033005Z"
     description: Installs pihole in kubernetes
     digest: e38470b302cb5c880238d2e2018f28ece60ef1bf9c6468909605d20cce64c6f0
@@ -1207,4 +1226,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2025-07-20T23:40:08.094127869Z"
+generated: "2025-08-02T20:47:02.872009046Z"
