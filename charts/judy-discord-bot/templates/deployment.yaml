@@ -18,13 +18,13 @@ spec:
         - name: {{ .Release.Name }}-config-vol
           configMap:
             name: {{ .Release.Name }}-config
-        - name: timezone
-          hostPath:
-            path: /usr/share/zoneinfo
       containers:
         - name: application
-          image: ghcr.io/alexpresso/judy-discord-bot:0.25.0
+          image: ghcr.io/alexpresso/judy-discord-bot:0.27.0
           imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: {{ .Values.env.TZ }}
           resources:
 {{- toYaml .Values.resources | nindent 12 }}
 

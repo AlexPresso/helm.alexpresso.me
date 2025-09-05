@@ -11,6 +11,9 @@ volume:
   size: 500Mi
   storageClass:
 
+env:
+  TZ: Europe/London
+
 config:
   bot:
     owner: #Your Discord ID
