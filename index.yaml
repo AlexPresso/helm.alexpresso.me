@@ -19,6 +19,17 @@ entries:
     version: 0.0.1
   judy-discord-bot:
   - apiVersion: v2
+    appVersion: 0.28.0
+    created: "2025-09-05T23:25:37.932475587Z"
+    description: A small custom Discord bot with a highly generic code-base made with
+      Discord.js which supports slash-commands, cron-jobs and much more.
+    digest: 7dcadb9c963cc0c02f3d2a08f06c6838bb8818fcb69f929f9adb18dd11a84d35
+    name: judy-discord-bot
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/judy-discord-bot-1.0.10/judy-discord-bot-1.0.10.tgz
+    version: 1.0.10
+  - apiVersion: v2
     appVersion: 0.27.0
     created: "2025-09-05T22:49:40.986102887Z"
     description: A small custom Discord bot with a highly generic code-base made with
@@ -1266,4 +1277,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2025-09-05T22:49:40.986385576Z"
+generated: "2025-09-05T23:25:37.932681219Z"
