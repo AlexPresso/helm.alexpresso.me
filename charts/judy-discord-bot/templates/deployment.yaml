@@ -40,5 +40,4 @@ spec:
               mountPath: /opt/app/data
             - name: {{ .Release.Name }}-timezone
               mountPath: /etc/localtime
-              subPath: localtime
               readOnly: true
