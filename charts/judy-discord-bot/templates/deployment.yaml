@@ -18,6 +18,10 @@ spec:
         - name: {{ .Release.Name }}-config-vol
           configMap:
             name: {{ .Release.Name }}-config
+        - name: {{ .Release.Name }}-timezone
+          hostPath:
+            path: /usr/share/zoneinfo/{{ .Values.env.TZ }}
+            type: File
       containers:
         - name: application
           image: ghcr.io/alexpresso/judy-discord-bot:0.28.0
@@ -34,3 +38,7 @@ spec:
               subPath: config.json
             - name: {{ .Release.Name }}
               mountPath: /opt/app/data
+            - name: {{ .Release.Name }}-timezone
+              mountPath: /etc/localtime
+              subPath: localtime
+              readOnly: true
