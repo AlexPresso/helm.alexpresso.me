@@ -24,7 +24,7 @@ spec:
             type: File
       containers:
         - name: application
-          image: ghcr.io/alexpresso/judy-discord-bot:0.31.0
+          image: ghcr.io/alexpresso/judy-discord-bot:0.32.0
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ
