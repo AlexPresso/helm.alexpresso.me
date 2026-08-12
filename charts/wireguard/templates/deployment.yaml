@@ -75,6 +75,8 @@ spec:
             - name: config
               mountPath: /etc/wireguard/
               readOnly: true
+          resources:
+{{- toYaml .Values.wireguard.resources | nindent 12 }}
       volumes:
         - name: config
           persistentVolumeClaim:
