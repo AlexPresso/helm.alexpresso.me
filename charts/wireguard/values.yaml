@@ -32,7 +32,7 @@ wireguard:
 #      publicKey: ""
   config:
     privateKey: "YOUR_WIREGUARD_PRIVATE_KEY"
-    listenPort: 51820
+#    listenPort: 51820
     address: "10.6.0.1/24"
     dns: ""  # Leave empty to use system default
     mtu: 1420
