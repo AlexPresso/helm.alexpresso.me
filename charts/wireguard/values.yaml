@@ -28,6 +28,7 @@ wireguard:
 #    - name: device2
 #      allowedIPs: "10.6.0.3/32"
 #      presharedKey: "YOUR_PRESHARED_KEY"
+#      endpoint: "xxx.xxx.xxx.xxx:51820"
 #      publicKey: ""
   config:
     privateKey: "YOUR_WIREGUARD_PRIVATE_KEY"
