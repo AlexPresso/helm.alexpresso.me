@@ -723,6 +723,21 @@ entries:
     version: 1.0.0
   wireguard:
   - apiVersion: v2
+    created: "2026-09-19T17:47:30.590898334Z"
+    description: A Helm chart for deploying WireGuard in K8S
+    digest: f973aa9dcc851c09883c1a25ae75fcedc502bbd7752458a5c37f52e39b6aea84
+    icon: https://www.wireguard.com/img/icons/favicon-256.png
+    maintainers:
+    - name: AlexPresso
+    name: wireguard
+    sources:
+    - https://github.com/linuxserver/docker-wireguard
+    - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/wireguard
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/wireguard-0.1.7/wireguard-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
     created: "2026-09-19T17:32:51.933217482Z"
     description: A Helm chart for deploying WireGuard in K8S
     digest: 3c29b86d03d051838b398dd1698f9475afe3e367faa9da6a99de1919667c222f
@@ -1410,4 +1425,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2026-09-19T17:32:51.933722367Z"
+generated: "2026-09-19T17:47:30.591155338Z"
