@@ -29,7 +29,7 @@ data:
 
       server {
         listen 443;
-        proxy_pass $tls_upstream:443;
+        proxy_pass $tls_upstream;
         access_log /dev/stdout basic;
       }
     }
