@@ -230,6 +230,24 @@ entries:
   nginx-sni-proxy:
   - apiVersion: v2
     appVersion: latest
+    created: "2026-09-25T18:00:36.352270599Z"
+    description: Installs an NGinX SNI Proxy in kubernetes
+    digest: 5eee8e465d480c1b600651e0db1ba57b4d4f54e9031f9fbe9cc6f9aace86a1e8
+    home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/nginx-sni-proxy
+    icon: https://nginx.org/img/nginx_logo_dark.png
+    maintainers:
+    - name: AlexPresso
+    name: nginx-sni-proxy
+    sources:
+    - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/nginx-sni-proxy
+    - https://nginx.org/
+    - https://hub.docker.com/_/nginx
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/nginx-sni-proxy-1.0.4/nginx-sni-proxy-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: latest
     created: "2026-09-25T17:03:34.573076222Z"
     description: Installs an NGinX SNI Proxy in kubernetes
     digest: d0e5e62cf88b93efba4b1463a1abc571d25a9d7bfa2d7f9483250341f969084a
@@ -1443,4 +1461,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2026-09-25T17:03:34.57332089Z"
+generated: "2026-09-25T18:00:36.352437821Z"
