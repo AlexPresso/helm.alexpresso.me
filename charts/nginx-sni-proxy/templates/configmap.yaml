@@ -19,9 +19,17 @@ data:
       log_format basic '[$time_local] $remote_addr -> $ssl_preread_server_name:$server_port '
                        'proto=$protocol bytes_sent=$bytes_sent bytes_received=$bytes_received duration=${session_time}ms';
 
+      map $ssl_preread_server_name $tls_upstream {
+        {{- range .Values.nginx.config.upstreamOverrides }}
+        {{ .domain }} {{ .upstream }};
+        {{- end}}
+
+        default $ssl_preread_server_name:443;
+      }
+
       server {
         listen 443;
-        proxy_pass $ssl_preread_server_name:443;
+        proxy_pass $tls_upstream:443;
         access_log /dev/stdout basic;
       }
     }

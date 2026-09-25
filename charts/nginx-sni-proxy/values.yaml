@@ -20,3 +20,7 @@ nginx:
         - 1.0.0.1
         - 1.1.1.1
       cache: 10s
+    # Useful when you want to proxy through a VPN, so local clients don't need to be connected to it.
+    upstreamOverrides: []
+#      - domain: "tunneled-ingress.lan"
+#        upstream: "10.6.0.10:443"
