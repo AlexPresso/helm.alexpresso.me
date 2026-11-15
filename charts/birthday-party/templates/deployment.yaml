@@ -1,0 +1,244 @@
+{{- $tag := .Values.image.tag | default .Chart.AppVersion }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend
+  labels:
+    name: {{ .Release.Name }}-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}-frontend
+  template:
+    metadata:
+      labels:
+        name: {{ .Release.Name }}-frontend
+    spec:
+      automountServiceAccountToken: false
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+{{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: runtime
+          emptyDir:
+            sizeLimit: 1Mi
+        - name: next-cache
+          emptyDir:
+            sizeLimit: 256Mi
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+
+      initContainers:
+        # startup.mjs writes the backend address into .next/routes-manifest.json at
+        # every start. Copy that file to a writable volume, mounted over the original
+        # below, so the root filesystem stays read-only.
+        - name: routes-manifest
+          image: {{ .Values.frontend.image }}:{{ $tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [cp, /app/.next/routes-manifest.json, /runtime/routes-manifest.json]
+          securityContext: &container-security
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 64Mi
+          volumeMounts:
+            - name: runtime
+              mountPath: /runtime
+
+      containers:
+        - name: frontend
+          image: {{ .Values.frontend.image }}:{{ $tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext: *container-security
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          env:
+            - name: API_INTERNAL_URL
+              value: http://{{ .Release.Name }}-backend:8080
+            - name: NODE_ENV
+              value: production
+            - name: HOSTNAME
+              value: "0.0.0.0"
+            - name: PORT
+              value: "3000"
+          volumeMounts:
+            - name: runtime
+              mountPath: /app/.next/routes-manifest.json
+              subPath: routes-manifest.json
+            # Next writes its data and image caches here; the app uses neither so far.
+            - name: next-cache
+              mountPath: /app/.next/cache
+            - name: tmp
+              mountPath: /tmp
+          resources:
+{{- toYaml .Values.frontend.resources | nindent 12 }}
+
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 5
+            failureThreshold: 60
+          # Readiness also checks Next's route to the backend, which server rendering
+          # needs even though the Ingress sends browser /api requests to the backend.
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 3
+          livenessProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+{{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+  labels:
+    name: {{ .Release.Name }}-backend
+spec:
+  # Local media storage and the durable job workers require one backend process.
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      name: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        name: {{ .Release.Name }}-backend
+    spec:
+      automountServiceAccountToken: false
+      {{- with .Values.image.pullSecrets }}
+      imagePullSecrets:
+{{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: {{ .Values.backend.volume.existingClaim | default (printf "%s-media" .Release.Name) }}
+        - name: tmp
+          emptyDir:
+            sizeLimit: 64Mi
+
+      containers:
+        - name: backend
+          image: {{ .Values.backend.image }}:{{ $tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: LISTEN_ADDR
+              value: "0.0.0.0:8080"
+            - name: DATA_DIR
+              value: /data
+            - name: PUBLIC_URL
+              value: {{ include "birthday-party.publicUrl" . | quote }}
+            - name: PRINT_ADMIN_INVITATION
+              value: {{ .Values.backend.printAdminInvitation | quote }}
+            {{- with .Values.backend.vapidSubject }}
+            - name: VAPID_SUBJECT
+              value: {{ . | quote }}
+            {{- end }}
+            {{- with .Values.backend.goMemoryLimit }}
+            - name: GOMEMLIMIT
+              value: {{ . | quote }}
+            {{- end }}
+            {{- if .Values.postgresql.enable }}
+            - name: DATABASE_URL
+              value: postgresql://{{ .Release.Name }}-postgresql:5432/?sslmode=disable
+            - name: PGDATABASE
+              value: {{ .Values.postgresql.database | quote }}
+            - name: PGUSER
+              value: {{ .Values.postgresql.username | quote }}
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql.existingSecret | default (printf "%s-secrets" .Release.Name) }}
+                  key: {{ .Values.postgresql.passwordKey }}
+            {{- else }}
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ required "externalDatabase.existingSecret is required when postgresql.enable is false" .Values.externalDatabase.existingSecret }}
+                  key: {{ .Values.externalDatabase.urlKey }}
+            {{- end }}
+          volumeMounts:
+            # Media, queued inputs and their temporary files live under DATA_DIR.
+            - name: media
+              mountPath: /data
+            # Nothing is known to write here; it keeps the default temp directory usable.
+            - name: tmp
+              mountPath: /tmp
+          resources:
+{{- toYaml .Values.backend.resources | nindent 12 }}
+
+          startupProbe:
+            httpGet:
+              path: &probe-uri /api/health
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 120
+          readinessProbe:
+            httpGet:
+              path: *probe-uri
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: *probe-uri
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 3
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+{{- toYaml . | nindent 8 }}
+      {{- end }}

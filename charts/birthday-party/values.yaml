@@ -1,0 +1,120 @@
+# publicUrl is the origin guests open, without a path. Empty uses https://<ingress.host>
+# (http:// without TLS) when the Ingress is enabled, otherwise http://localhost:3000.
+# Invitation links are built from it and an https URL makes cookies secure.
+publicUrl: ""
+
+image:
+  # tag deploys the same revision of both applications. Empty uses the chart appVersion;
+  # sha-<full commit SHA> pins one exact build of the main branch.
+  tag: ""
+  # Version and sha-* tags never move. Use Always only with a moving tag such as latest.
+  pullPolicy: IfNotPresent
+  # pullSecrets lists existing registry Secrets, for a private fork's images.
+  pullSecrets: []
+
+frontend:
+  image: ghcr.io/alexpresso/birthday-party-frontend
+  # The Next.js server idles around 70 MiB. The limit leaves room for rendering and
+  # for uploads sent through its /api proxy when no Ingress is used (port-forward).
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 1Gi
+
+backend:
+  image: ghcr.io/alexpresso/birthday-party-backend
+  # printAdminInvitation prints a single-use host link in the backend log at startup.
+  printAdminInvitation: true
+  # vapidSubject optionally gives Web Push services a mailto: or https: contact.
+  vapidSubject: ""
+  # The Go server idles under 50 MiB. Two media workers each decode one photo of up
+  # to 40 megapixels (roughly 150 to 500 MiB each), and FFmpeg decodes one frame per
+  # video in a child process. No CPU limit: throttling would only slow thumbnails.
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      memory: 2Gi
+  # goMemoryLimit sets GOMEMLIMIT so Go frees memory before the container limit.
+  # Keep it below resources.limits.memory to leave room for FFmpeg. Empty disables it.
+  goMemoryLimit: 1536MiB
+  # The volume holds photos, videos, thumbnails and pending uploads. Its free space
+  # bounds the gallery: the backend refuses uploads that would nearly fill it.
+  volume:
+    # existingClaim reuses a PVC of the release namespace instead of creating one.
+    existingClaim: ""
+    annotations:
+    # storageClass uses the cluster default when empty; "-" selects no StorageClass.
+    storageClass: ""
+    size: 20Gi
+
+postgresql:
+  # enable deploys one PostgreSQL instance. Disable it to use externalDatabase.
+  enable: true
+  image: postgres:18-alpine
+  database: birthday
+  username: birthday
+  # password is stored in the <release>-secrets Secret. Leave it empty to read it
+  # from existingSecret instead, which keeps it out of the Helm release.
+  password: ""
+  existingSecret: ""
+  passwordKey: password
+  volume:
+    existingClaim: ""
+    annotations:
+    storageClass: ""
+    size: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 1Gi
+
+externalDatabase:
+  # existingSecret holds a complete PostgreSQL URL when postgresql.enable is false.
+  existingSecret: ""
+  urlKey: DATABASE_URL
+  # port is the only database port the backend NetworkPolicy opens.
+  port: 5432
+
+ingress:
+  enable: false
+  # host serves the app: /api (API, uploads and the /api/realtime WebSocket) goes
+  # straight to the backend, every other path to the frontend.
+  host: ""
+  # tls serves the host with the <release>-cert Secret, for example from cert-manager.
+  tls: true
+  className: traefik
+  # Uploads need, on the /api route: a body limit of at least 1025 MiB, 600-second
+  # upload and download timeouts, no request buffering and WebSocket upgrades kept
+  # open for more than 30 seconds. Traefik does all this by default, except the
+  # timeout, set on its entry point:
+  #   --entryPoints.websecure.transport.respondingTimeouts.readTimeout=600s
+  annotations:
+#    cert-manager.io/cluster-issuer: letsencrypt
+#    ingress-nginx:
+#    nginx.ingress.kubernetes.io/proxy-body-size: 1025m
+#    nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+#    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+#    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+
+networkPolicy:
+  # enable allows only: ingressFrom -> frontend and backend HTTP ports, frontend ->
+  # backend, backend -> PostgreSQL, DNS, and backend -> public internet on TCP 443
+  # for Web Push. It needs a network plugin that enforces NetworkPolicy.
+  enable: true
+  # ingressFrom lists the peers allowed on the two HTTP ports. Empty allows any
+  # source on these ports only. To allow the Ingress controller alone:
+  #   ingressFrom:
+  #     - namespaceSelector:
+  #         matchLabels:
+  #           kubernetes.io/metadata.name: traefik
+  ingressFrom: []
+
+# nodeSelector and tolerations apply to all three components.
+nodeSelector: {}
+tolerations: []

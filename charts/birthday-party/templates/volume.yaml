@@ -1,0 +1,34 @@
+{{- $volumes := dict "media" .Values.backend.volume }}
+{{- if .Values.postgresql.enable }}
+{{- $_ := set $volumes "postgresql" .Values.postgresql.volume }}
+{{- end }}
+{{- range $name, $volume := $volumes }}
+{{- if not $volume.existingClaim }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $.Release.Name }}-{{ $name }}
+  annotations:
+    # Uninstalling the release keeps the photos and the database.
+    helm.sh/resource-policy: keep
+    {{- with $volume.annotations }}
+{{- toYaml . | nindent 4 }}
+    {{- end }}
+  labels:
+    app: {{ $.Release.Name }}
+    heritage: {{ $.Release.Service }}
+    release: {{ $.Release.Name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ $volume.size | quote }}
+  {{- if eq $volume.storageClass "-" }}
+  storageClassName: ""
+  {{- else if $volume.storageClass }}
+  storageClassName: {{ $volume.storageClass | quote }}
+  {{- end }}
+{{- end }}
+{{- end }}

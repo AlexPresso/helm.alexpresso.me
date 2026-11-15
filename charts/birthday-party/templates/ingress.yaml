@@ -1,0 +1,50 @@
+{{ if .Values.ingress.enable }}
+{{- $host := required "ingress.host is required when ingress.enable is true" .Values.ingress.host }}
+{{- $publicUrl := include "birthday-party.publicUrl" . }}
+{{- if ne (regexReplaceAll ":[0-9]+$" (urlParse $publicUrl).host "") $host }}
+{{- fail "ingress.host must match the host of publicUrl" }}
+{{- end }}
+{{- if and .Values.ingress.tls (not (hasPrefix "https://" $publicUrl)) }}
+{{- fail "publicUrl must use https:// when ingress.tls is true" }}
+{{- end }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-ingress
+  {{- with .Values.ingress.annotations }}
+  annotations:
+{{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- with .Values.ingress.className }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ $host }}
+      secretName: {{ .Release.Name }}-cert
+  {{- end }}
+
+  rules:
+    - host: {{ $host }}
+      http:
+        paths:
+          # The API, uploads and the realtime WebSocket bypass the Next.js proxy,
+          # which would hold each upload in memory. Same host: cookies and the
+          # Origin check against publicUrl are unchanged.
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-backend
+                port:
+                  name: http
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}-frontend
+                port:
+                  name: http
+{{ end }}

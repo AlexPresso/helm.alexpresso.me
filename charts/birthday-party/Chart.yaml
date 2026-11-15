@@ -1,0 +1,17 @@
+apiVersion: v2
+name: birthday-party
+description: Private birthday party app to share photos and videos, with a schedule, votes and games
+type: application
+icon: https://raw.githubusercontent.com/AlexPresso/birthday-party/main/frontend/public/icons/app-512.png
+version: 1.0.0
+# appVersion is the default image tag, published by pushing the Git tag v<appVersion> to birthday-party.
+appVersion: "1.0.0"
+kubeVersion: ">=1.25.0-0"
+home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/birthday-party
+sources:
+  - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/birthday-party
+  - https://github.com/AlexPresso/birthday-party
+maintainers:
+  - name: AlexPresso
+annotations:
+  artifacthub.io/license: AGPL-3.0-only

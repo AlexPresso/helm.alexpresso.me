@@ -1,0 +1,9 @@
+backend:
+  volume:
+    existingClaim: existing-media
+postgresql:
+  password: not-a-real-password
+  volume:
+    existingClaim: existing-database
+networkPolicy:
+  enable: false
