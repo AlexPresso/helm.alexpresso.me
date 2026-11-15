@@ -1,0 +1,20 @@
+image:
+  tag: sha-0123456789abcdef0123456789abcdef01234567
+  pullSecrets:
+    - name: ghcr
+postgresql:
+  existingSecret: birthday-database
+ingress:
+  enable: true
+  host: party.example.com
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 1025m
+    nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+networkPolicy:
+  ingressFrom:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: ingress-nginx

@@ -12,3 +12,4 @@ My own helm charts repository
 | [zunivers-ninja](https://github.com/AlexPresso/zunivers-ninja)       | Automated advice tool for the ZUnivers card game (not affiliated)                                                                       |
 | [judy-discord-bot](https://github.com/AlexPresso/judy-discord-bot)   | A small custom Discord bot with a highly generic code-base made with Discord.js which supports slash-commands, cron-jobs and much more. |
 | [pihole](https://github.com/pi-hole/docker-pi-hole)                  | Kubernetes implementation of Pi-Hole                                                                                                    |
+| [birthday-party](https://github.com/AlexPresso/birthday-party)       | Private birthday party app to share photos and videos, with a schedule, votes and games                                                 |

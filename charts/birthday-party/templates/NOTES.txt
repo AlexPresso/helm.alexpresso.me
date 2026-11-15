@@ -1,0 +1,18 @@
+Birthday Party is configured for {{ include "birthday-party.publicUrl" . }}.
+{{- if not .Values.ingress.enable }}
+
+Open it locally with:
+  kubectl --namespace {{ .Release.Namespace }} port-forward service/{{ .Release.Name }}-frontend 3000:3000
+{{- else }}
+
+The Ingress sends /api to the backend and every other path to the frontend.
+Check its upload size, timeout and buffering settings before inviting guests.
+{{- end }}
+{{- if .Values.backend.printAdminInvitation }}
+
+The single-use host invitation is in the backend startup log:
+  kubectl --namespace {{ .Release.Namespace }} logs deployment/{{ .Release.Name }}-backend
+{{- end }}
+
+Back up PostgreSQL and the media volume together, with the backend stopped.
+Uninstalling keeps both volumes; delete them only when their data is no longer needed.
