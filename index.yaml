@@ -17,6 +17,28 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/SearxNG-0.0.1/SearxNG-0.0.1.tgz
     version: 0.0.1
+  birthday-party:
+  - annotations:
+      artifacthub.io/license: AGPL-3.0-only
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-11-15T15:07:48.70386897Z"
+    description: Private birthday party app to share photos and videos, with a schedule,
+      votes and games
+    digest: c6b2e04b2cb90dd1d07e2e33a1175c61503195c45eec181d20127dde255ea0dc
+    home: https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/birthday-party
+    icon: https://raw.githubusercontent.com/AlexPresso/birthday-party/main/frontend/public/icons/app-512.png
+    kubeVersion: '>=1.25.0-0'
+    maintainers:
+    - name: AlexPresso
+    name: birthday-party
+    sources:
+    - https://github.com/AlexPresso/helm.alexpresso.me/tree/main/charts/birthday-party
+    - https://github.com/AlexPresso/birthday-party
+    type: application
+    urls:
+    - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/birthday-party-1.0.0/birthday-party-1.0.0.tgz
+    version: 1.0.0
   judy-discord-bot:
   - apiVersion: v2
     appVersion: 0.34.0
@@ -1461,4 +1483,4 @@ entries:
     urls:
     - https://github.com/AlexPresso/helm.alexpresso.me/releases/download/zunivers-webhooks-1.0.7/zunivers-webhooks-1.0.7.tgz
     version: 1.0.7
-generated: "2026-09-25T18:00:36.352437821Z"
+generated: "2026-11-15T15:07:48.703995295Z"
