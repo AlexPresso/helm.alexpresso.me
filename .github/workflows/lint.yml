@@ -1,0 +1,67 @@
+name: Lint Charts
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v5
+
+      - name: Install Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: Install chart-testing
+        uses: helm/chart-testing-action@v2.9.0
+
+      - name: List changed charts
+        id: changed
+        run: |
+          charts=$(ct list-changed --target-branch "${{ github.event.repository.default_branch }}")
+          echo "charts=$(echo $charts)" >> "$GITHUB_OUTPUT"
+
+      - name: Add repositories
+        if: steps.changed.outputs.charts != ''
+        run: |
+          for dir in ${{ steps.changed.outputs.charts }}; do
+            helm dependency list $dir 2> /dev/null | tail +2 | head -n -1 | awk '{ print "helm repo add " $1 " " $3 }' | while read cmd; do $cmd; done
+          done
+
+      # Lints each changed chart with every ci/*-values.yaml file, or its defaults
+      # without one, and checks that its version was bumped.
+      - name: Lint
+        if: steps.changed.outputs.charts != ''
+        run: ct lint --target-branch "${{ github.event.repository.default_branch }}" --validate-maintainers=false
+
+      - name: Install kubeconform
+        if: steps.changed.outputs.charts != ''
+        run: |
+          curl --fail --silent --show-error --location --retry 3 --output kubeconform.tar.gz \
+            https://github.com/yannh/kubeconform/releases/download/v0.8.0/kubeconform-linux-amd64.tar.gz
+          echo '9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883  kubeconform.tar.gz' | sha256sum --check
+          tar -xzf kubeconform.tar.gz kubeconform
+
+      # Validates the rendered manifests against the Kubernetes schemas.
+      - name: Validate manifests
+        if: steps.changed.outputs.charts != ''
+        run: |
+          for dir in ${{ steps.changed.outputs.charts }}; do
+            helm dependency build $dir > /dev/null
+            values=$(ls $dir/ci/*-values.yaml 2> /dev/null || echo $dir/values.yaml)
+            for file in $values; do
+              echo "$dir with $file"
+              helm template release $dir --values $file | ./kubeconform -strict -summary -ignore-missing-schemas
+            done
+          done
